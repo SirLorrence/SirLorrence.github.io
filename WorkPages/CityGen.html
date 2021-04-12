@@ -7,60 +7,88 @@
     <title>Laurence Sadler</title>
     <link rel="icon" type="image/png" sizes="24x24" href="../assets/img/icons8-apple-arcade-24.png">
     <link rel="stylesheet" href="../assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
-    <link rel="stylesheet" href="../assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700,900">
     <link rel="stylesheet" href="../assets/css/styles.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/css/swiper.min.css">
 </head>
 
 <body>
     <header style="padding: 0px;margin: 15px;">
         <nav class="navbar navbar-light navbar-expand-md navigation-clean" style="margin: 10px;background: rgba(255,255,255,0);">
-            <div class="container"><a class="navbar-brand" href="../index.html">Laurence Sadler</a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="container"><a href="../index.html"><img style="width: 50px;" src="../assets/img/_Logo.png"></a><a class="navbar-brand" href="index.html" style="background: url(&quot;https://cdn.bootstrapstudio.io/placeholders/1400x800.png&quot;);"></a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item"><a class="nav-link" href="../index.html">Portfolio<br></a></li>
-                        <li class="nav-item"><a class="nav-link" href="../about.html">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../index.html" style="font-family: Montserrat, sans-serif;">Home</a></li>
+                        <li class="nav-item" style="font-family: Montserrat, sans-serif;"><a class="nav-link" href="../about.html" style="font-family: Montserrat, sans-serif;">About</a></li>
+                        <li class="nav-item" style="font-family: Montserrat, sans-serif;"><a class="nav-link" style="font-family: Montserrat, sans-serif;" href="https://github.com/SirLorrence/Resume/blob/main/LaurenceSadler_Resume.pdf" target="_blank">CV</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="article-clean">
+    <div data-aos="fade" data-aos-duration="1000" class="article-clean">
         <div class="container">
             <div class="intro">
-                <h1 class="text-center" style="color: var(--dark);margin-bottom: 50px;">City Generation</h1>
+                <h1 class="text-center" style="color: var(--dark);margin-bottom: 50px;font-family: Montserrat, sans-serif;"><strong>City Generation</strong></h1>
             </div>
             <div class="row">
                 <div class="col">
                     <ul class="list-unstyled" style="font-size: 20px;border-color: var(--dark);">
-                        <li><strong>Engine:&nbsp;</strong>Unity</li>
-                        <li><strong>Language:&nbsp;</strong>C#</li>
+                        <li style="font-family: Montserrat, sans-serif;"><strong>Engine:&nbsp;</strong>Unity</li>
+                        <li style="font-family: Montserrat, sans-serif;"><strong>Language:&nbsp;</strong>C#</li>
                     </ul>
                 </div>
                 <div class="col-lg-10 col-xl-8 offset-lg-1 offset-xl-2">
-                    <p class="text-break" style="font-size: 20px;color: var(--dark);">This program generates a city by creating a grid that is split up into sections, then split up again into there own neighborhoods. The way I programmed it, somewhat works off the Binary Space Partitioning (BSP for short).&nbsp;<br></p>
-                    <p style="color: var(--dark);font-size: 20px;">While the program is splitting up map information, at the same time it is storing the x and z position. So on the fill stage, it places the randomly picked assets in that position. This is still a prototype, I believe there still more work to be done.&nbsp;</p><a href="https://github.com/SirLorrence/City-Gen" target="_blank"><button class="btn btn-primary" type="button" style="background: var(--gray);border-style: none;">Project Repository</button></a>
+                    <p class="text-break" style="font-size: 20px;color: var(--dark);font-family: Montserrat, sans-serif;">This program generates a city by creating a grid that is split up into sections, then split up again into there own neighborhoods. The way I programmed it, somewhat works off the Binary Space Partitioning (BSP for short).&nbsp;<br></p>
+                    <p style="color: var(--dark);font-size: 20px;font-family: Montserrat, sans-serif;">While the program is splitting up map information, at the same time it is storing the x and z position. So on the fill stage, it places the randomly picked assets in that position. This is still a prototype, I believe there still more work to be done.&nbsp;</p><a href="https://github.com/SirLorrence/City-Gen" target="_blank"><button class="btn btn-primary" type="button" style="background: var(--gray);border-style: none;font-family: Montserrat, sans-serif;">Project Repository</button></a>
                 </div>
             </div>
-            <div class="text">
-                <figure><img class="figure-img" src="../assets/img/Prototype_Screenshot.png">
-                    <figcaption>Version 1</figcaption>
-                </figure>
-                <figure><img class="figure-img" src="../assets/img/City-Screenshot-Overhead.png">
-                    <figcaption>Version 2</figcaption>
-                </figure>
+            <div class="simple-slider" style="margin-top: 15px;">
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" style="background: url(&quot;../assets/img/Prototype_Screenshot.png&quot;) center center / contain no-repeat;"></div>
+                        <div class="swiper-slide" style="background: url(&quot;../assets/img/City-Screenshot-Overhead.png&quot;) center center / contain no-repeat;"></div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
             </div>
         </div>
     </div>
-    <div class="footer-basic" style="margin-top: 40px;background: rgba(255,255,255,0);">
-        <footer>
-            <div class="social"><a href="https://github.com/SirLorrence" target="_blank"><i class="icon ion-social-github"></i></a><a href="linkedin.com/in/laurencesadler" target="_blank"><i class="icon ion-social-linkedin"></i></a><a href="https://twitter.com/lvlzr0" target="_blank"><i class="icon ion-social-twitter"></i></a><a href="https://www.instagram.com/sir.laurencee/" target="_blank"><i class="icon ion-social-instagram"></i></a></div>
-            <p class="copyright">Made with Bootstrap Studio</p>
+    <div class="footer-basic" style="margin-top: 40px;background: rgba(255,255,255,0);font-family: Montserrat, sans-serif;">
+        <footer class="footer-dark" style="background: #222222;">
+            <div class="container" style="width: 660px;">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>Nav</h3>
+                        <ul>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="../about.html">About</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Social</h3>
+                        <ul>
+                            <li><a href="https://www.linkedin.com/in/laurencesadler/" target="_blank">Linked In</a></li>
+                            <li><a href="https://twitter.com/lvlzr0" target="_blank">Twitter</a></li>
+                            <li><a href="https://github.com/SirLorrence" target="_blank">GitHub</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Contact</h3>
+                        <p>sirlaurence@protonmail.com</p>
+                    </div>
+                </div>
+            </div>
         </footer>
     </div>
     <script src="../assets/js/jquery.min.js"></script>
     <script src="../assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/3.3.1/js/swiper.jquery.min.js"></script>
     <script src="../assets/js/script.min.js"></script>
 </body>
 
