@@ -1,11 +1,15 @@
 baseURL: https://example.org/
 languageCode: en-us
-title: My New Hugo Site
+title: Laurence Sadler
 theme: "PaperMod"
+
 params:
   homeInfoParams:
     Title: Hi there wave
     Content: Can be Info, links, about...
+    imageUrl: "picture.jpeg"
+    imageWidth: 160
+    imageHeight: 160
 
   socialIcons: # optional
     - name: "<platform>"

@@ -1,9 +1,7 @@
 ---
-title: "Project Alpha"
-subheading: "A Revolutionary Project"
-date: 2024-01-15
-client: "Client XYZ"
-tools: ["Hugo", "Bootstrap"]
+title: "Software Ray Tracer"
+summary: "Project using C++ to understand the working of Raytracing."
+tags: ["Hugo", "Bootstrap"]
 
 cover:
   image: "https://i.ibb.co/K0HVPBd/paper-mod-profilemode.png"

@@ -1,9 +1,9 @@
 ---
 title: "Project Alpha"
-subheading: "A Revolutionary Project"
+description: "Desc Text."
 date: 2024-01-15
 client: "Client XYZ"
-tools: ["Hugo", "Bootstrap"]
+tags: ["Hugo", "Bootstrap"]
 
 cover:
   image: "https://i.ibb.co/K0HVPBd/paper-mod-profilemode.png"
