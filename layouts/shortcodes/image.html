@@ -1,0 +1,12 @@
+{{ $src := .Get "src" }} {{ $alt := .Get "alt" }}{{ $imageHeight := .Get
+"height" }}{{ $imageWidth := .Get "width" }}
+
+<div class="profile-pic">
+  <img
+    src="{{ $src }}"
+    alt="{{ $alt }}"
+    height="{{ $imageHeight | default 150 }}"
+    width="{{ $imageWidth | default 150 }}"
+    decoding="async"
+  />
+</div>

@@ -1,10 +1,12 @@
 ---
 title: "AI Position System Prototype"
 summary: "Project using C++ to understand the working of Raytracing."
-tags: ["C++", "Graphics"]
+tags: ["C#","Unity", "AI", "Prototype"]
 ShowToc: true
 cover:
   image: "https://i.ibb.co/K0HVPBd/paper-mod-profilemode.png"
+  imageWidth: 120 # custom size
+  imageHeight: 120
   # can also paste direct link from external site
   # ex. https://i.ibb.co/K0HVPBd/paper-mod-profilemode.png
   alt: "<alt text>"
@@ -15,6 +17,12 @@ cover:
 ## Project Summary
 
 In this project, I developed my own pseudo-environment query system. Initially, I was working on a top-down roguelike game. I wanted to improve how enemies move toward the player instead of just setting their move position to the player's position. This process taught me a new approach to programming and thinking about AI movement.
+
+**Engine:** Unity
+
+**Language:** C#
+
+
 
 ---
 
