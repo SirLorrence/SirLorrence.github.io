@@ -13,3 +13,7 @@ Read https://github.com/adityatelange/hugo-PaperMod/wiki/FAQs#bundling-custom-cs
 .profile-pic img {
   border-radius: 50%;
 }
+
+.post-content img[src*="#viewport3"] {
+  max-width: 100%;
+}

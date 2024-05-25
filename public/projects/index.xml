@@ -9,9 +9,16 @@
     <atom:link href="http://localhost:1313/projects/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AI Position System Prototype</title>
-      <link>http://localhost:1313/projects/positioning-system-prototype-copy-1/</link>
+      <link>http://localhost:1313/projects/positioning-system-prototype/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/projects/positioning-system-prototype-copy-1/</guid>
+      <guid>http://localhost:1313/projects/positioning-system-prototype/</guid>
+      <description>Project using C++ to understand the working of Raytracing.</description>
+    </item>
+    <item>
+      <title>Software Ray Tracer</title>
+      <link>http://localhost:1313/projects/ray-tracer/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/projects/ray-tracer/</guid>
       <description>Project using C++ to understand the working of Raytracing.</description>
     </item>
   </channel>
