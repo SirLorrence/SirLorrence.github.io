@@ -14,8 +14,10 @@
 
 {{- $author := (partial "author.html" .) }}
 {{- $tags := (partial "tags.html" .) }}
-{{- if $tags }}
+{{- if and (ne $author "") $tags }}
     {{- $scratch.Add "meta" (slice $author $tags) -}}
+{{- else if $tags}}
+    {{- $scratch.Add "meta" (slice $tags) -}}
 {{- else}}
     {{- $scratch.Add "meta" (slice $author) -}}
 {{- end}}
