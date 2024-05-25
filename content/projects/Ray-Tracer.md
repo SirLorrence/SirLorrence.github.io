@@ -24,6 +24,8 @@ I decided to learn about Ray Tracing after playing "Control" by Remedy Entertain
 
 **Language:** C++
 
+### **[Project Repository](https://github.com/SirLorrence/Simple-Raytracer)**
+---
 ### My takeaways from this project(so far):
 - Learning the basics of how Ray Tracing works!
 - How to multi-threading a program in C++

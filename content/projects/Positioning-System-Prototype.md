@@ -1,10 +1,10 @@
 ---
 title: "AI Position System Prototype"
-summary: "Project using C++ to understand the working of Raytracing."
+summary: "I developed a flexible enemy positioning AI, using a custom query system."
 tags: ["C#","Unity", "AI", "Prototype"]
 ShowToc: true
 cover:
-  image: "https://i.ibb.co/K0HVPBd/paper-mod-profilemode.png"
+  image: "https://github.com/SirLorrence/ReadMeImages/blob/main/AI-PositionSystem-Prototype/All-together-gif.gif?raw=true"
   imageWidth: 120 # custom size
   imageHeight: 120
   # can also paste direct link from external site
@@ -22,6 +22,7 @@ In this project, I developed my own pseudo-environment query system. Initially, 
 
 **Language:** C#
 
+### **[Project Repository](https://github.com/SirLorrence/AI-PositionSystem-Prototype)**
 
 
 ---
