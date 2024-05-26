@@ -2,39 +2,39 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/projects/positioning-system-prototype/</loc>
+    <loc>https://example.org/projects/positioning-system-prototype/</loc>
   </url><url>
-    <loc>http://localhost:1313/projects/ray-tracer/</loc>
+    <loc>https://example.org/projects/ray-tracer/</loc>
   </url><url>
-    <loc>http://localhost:1313/projects/game-jams/</loc>
+    <loc>https://example.org/projects/game-jams/</loc>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://example.org/</loc>
     <lastmod>2024-01-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/</loc>
+    <loc>https://example.org/posts/</loc>
     <lastmod>2024-01-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/posts/setting-up-linode-lfs-server/</loc>
+    <loc>https://example.org/posts/setting-up-linode-lfs-server/</loc>
     <lastmod>2024-01-24T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/about/</loc>
+    <loc>https://example.org/about/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/ai/</loc>
+    <loc>https://example.org/tags/ai/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/c%23/</loc>
+    <loc>https://example.org/tags/c%23/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/c&#43;&#43;/</loc>
+    <loc>https://example.org/tags/c&#43;&#43;/</loc>
   </url><url>
-    <loc>http://localhost:1313/categories/</loc>
+    <loc>https://example.org/categories/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/graphics/</loc>
+    <loc>https://example.org/tags/graphics/</loc>
   </url><url>
-    <loc>http://localhost:1313/projects/</loc>
+    <loc>https://example.org/projects/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/prototype/</loc>
+    <loc>https://example.org/tags/prototype/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://example.org/tags/</loc>
   </url><url>
-    <loc>http://localhost:1313/tags/unity/</loc>
+    <loc>https://example.org/tags/unity/</loc>
   </url>
 </urlset>

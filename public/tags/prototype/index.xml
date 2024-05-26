@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>Prototype on Home</title>
-    <link>http://localhost:1313/tags/prototype/</link>
-    <description>Recent content in Prototype on Home</description>
+    <title>Prototype on Laurence Sadler</title>
+    <link>https://example.org/tags/prototype/</link>
+    <description>Recent content in Prototype on Laurence Sadler</description>
     <generator>Hugo -- 0.126.1</generator>
     <language>en-us</language>
-    <atom:link href="http://localhost:1313/tags/prototype/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://example.org/tags/prototype/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AI Position System Prototype</title>
-      <link>http://localhost:1313/projects/positioning-system-prototype/</link>
+      <link>https://example.org/projects/positioning-system-prototype/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/projects/positioning-system-prototype/</guid>
+      <guid>https://example.org/projects/positioning-system-prototype/</guid>
       <description>I developed a flexible enemy positioning AI, using a custom query system.</description>
     </item>
   </channel>

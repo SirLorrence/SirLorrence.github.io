@@ -1,24 +1,24 @@
 <!DOCTYPE html>
 <html lang="en" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
-<title>Software Ray Tracer | Home</title>
+<meta name="robots" content="index, follow">
+<title>Software Ray Tracer | Laurence Sadler</title>
 <meta name="keywords" content="C&#43;&#43;, Graphics">
 <meta name="description" content="Project using C&#43;&#43; to understand the working of Raytracing.">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/projects/ray-tracer/">
+<link rel="canonical" href="https://example.org/projects/ray-tracer/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.52e33300358c98501a2416ecbb40137de1801d2c850f0646f9913dde8162339f.css" integrity="sha256-UuMzADWMmFAaJBbsu0ATfeGAHSyFDwZG&#43;ZE93oFiM58=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/apple-touch-icon.png">
-<link rel="mask-icon" href="http://localhost:1313/safari-pinned-tab.svg">
+<link rel="icon" href="https://example.org/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="https://example.org/assets/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://example.org/assets/favicon-32x32.png%3E">
+<link rel="apple-touch-icon" href="https://example.org/assets/apple-touch-icon.png">
+<link rel="mask-icon" href="https://example.org/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://localhost:1313/projects/ray-tracer/">
+<link rel="alternate" hreflang="en" href="https://example.org/projects/ray-tracer/">
 <noscript>
     <style>
         #theme-toggle,
@@ -56,6 +56,71 @@
 
     </style>
 </noscript>
+  
+
+<meta property="og:title" content="Software Ray Tracer" />
+<meta property="og:description" content="Project using C&#43;&#43; to understand the working of Raytracing." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.org/projects/ray-tracer/" />
+<meta property="og:image" content="https://github.com/SirLorrence/Simple-Raytracer/blob/main/images/Ray%20Render-HD.png?raw=true" /><meta property="article:section" content="projects" />
+
+
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://github.com/SirLorrence/Simple-Raytracer/blob/main/images/Ray%20Render-HD.png?raw=true" />
+<meta name="twitter:title" content="Software Ray Tracer"/>
+<meta name="twitter:description" content="Project using C&#43;&#43; to understand the working of Raytracing."/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Projects",
+      "item": "https://example.org/projects/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Software Ray Tracer",
+      "item": "https://example.org/projects/ray-tracer/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Software Ray Tracer",
+  "name": "Software Ray Tracer",
+  "description": "Project using C++ to understand the working of Raytracing.",
+  "keywords": [
+    "C++", "Graphics"
+  ],
+  "articleBody": " Dielectric Lambertian Metal Project Summary I decided to learn about Ray Tracing after playing “Control” by Remedy Entertainment. Learning how to create a virtual scene using custom vector/ray definition, calculate sphere intersection, and render a baked image was fascinating. Although I’m shifting my focus to other projects emphasizing gameplay and mechanics, I plan to return to this project later and explore more about the graphics pipeline.\nLanguage: C++\nProject Repository My takeaways from this project(so far): Learning the basics of how Ray Tracing works! How to multi-threading a program in C++ The programming and learning vector3 class operates under the hood. Importing libraries with existing code and using Parrelle Libraries. How some functions need to be thread-safe to be utilized properly Problems encountered Circular Dependencies - head files order issue int overflow - miscalculations causing corrupted render The single-thread render performance is faster than the multi-thread performance on Linux platforms. I was so focused on optimizing for speed that I forgot about the image output, causing a corrupted image. ‘rand()’ is not thread-safe Overview - Multi-Threading \u0026 Testing Render Speed This was the most exciting part of my project. Trying to figure it out took up most of my time. My first approach to this problem was to create my own thread pool. I modeled it after the object pool data structure cause that’s what I use whenever I want to recycle anything within Unity - I wrote object pools before instead of an object, using a thread.\nMock Up Result This worked…. kind of. The image was rendered with a minor corruption on the last line. But the big thing I noticed was that the render time increased.\nPain.\nSo I went back to the drawing board. With this second method, I decided to base it on the number of threads I had and split the image into sections based on it. That worked, too. Even fixed the image corruption…..Still took longer.\nThe pain, is building.\nAfter playing around with it, using different compilers, and checking if my code was correct, I decided to test performance on other systems. I had issues on different systems using Linux, but once I tested on Windows and MacOS. It worked ~75% increase. Which was good, but why? Why, on the same system, is Linux performance worse than Windows when running multithreads? At first, with some of the research I came across, it could have been CPU affinity, the Linux scheduling system, or something low-level, which I refused to believe. So, thinking my attempt at programming a multi-threading system was a bust, I decided to implement OpenMP, but the issue persisted.\nThe Pain is building.\nI kept digging, looking for a solution, and then I decided to use an IDE to debug the call stack. I found that the ‘RandomDouble01()’ function was often called. With each core/thread, you’ll have your own stack memory (or its own cache); it was calling that function from the main memory. I ran into a cache coherence issue, which I wouldn’t have known if I was programming on Windows or Mac (Linux for the win!). The solution was to add thread_local to the functions you want to be called locally. I went crazy adding them everywhere, which used randomdouble01(), reducing it to around 300-500ms. Great, until I looked at the photo…\nI had to step back. Why not just apply thread_local to RandomDouble01() itself? It still corrupted the image. I was stumped. I returned to the drawing board again and came across the phrase “thread safe”. I looked up if rand() is a thread-safe function; it was not. Using the recommended C++ random function I had seen everywhere, I looked for an alternative to rand() and added thread_local; it worked. Reruning all my tests, seeing the improvements. Even managed to beat out OpenMP with my second method. I also wanted to try more things, such as Tiling. Divide large datasets into smaller tiles, processing one tile pre-thread. Here are the results.\n",
+  "wordCount" : "663",
+  "inLanguage": "en",
+  "image":"https://github.com/SirLorrence/Simple-Raytracer/blob/main/images/Ray%20Render-HD.png?raw=true","datePublished": "0001-01-01T00:00:00Z",
+  "dateModified": "0001-01-01T00:00:00Z",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://example.org/projects/ray-tracer/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Laurence Sadler",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://example.org/assets/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -73,7 +138,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Home (Alt + H)">Home</a>
+            <a href="https://example.org/" accesskey="h" title="Laurence Sadler (Alt + H)">Laurence Sadler</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -99,27 +164,27 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="http://localhost:1313/projects/" title="Projects">
+                <a href="https://example.org/projects/" title="Projects">
                     <span>Projects</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/posts/" title="Blogs">
+                <a href="https://example.org/posts/" title="Blogs">
                     <span>Blogs</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/laurencesadler-resume.pdf" title="CV">
+                <a href="https://example.org/laurencesadler-resume.pdf" title="CV">
                     <span>CV</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/tags/" title="tags">
-                    <span>tags</span>
+                <a href="https://example.org/tags/" title="Tags">
+                    <span>Tags</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/about/" title="About">
+                <a href="https://example.org/about/" title="About">
                     <span>About</span>
                 </a>
             </li>
@@ -130,7 +195,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    
+    <div class="breadcrumbs"><a href="https://example.org/">Home</a>&nbsp;»&nbsp;<a href="https://example.org/projects/">Projects</a></div>
     <h1 class="post-title entry-hint-parent">
       Software Ray Tracer
     </h1>
@@ -247,15 +312,28 @@
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="http://localhost:1313/tags/c&#43;&#43;/">C&#43;&#43;</a></li>
-      <li><a href="http://localhost:1313/tags/graphics/">Graphics</a></li>
+      <li><a href="https://example.org/tags/c&#43;&#43;/">C&#43;&#43;</a></li>
+      <li><a href="https://example.org/tags/graphics/">Graphics</a></li>
     </ul>
+<nav class="paginav">
+  <a class="prev" href="https://example.org/projects/positioning-system-prototype/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>AI Position System Prototype</span>
+  </a>
+  <a class="next" href="https://example.org/projects/game-jams/">
+    <span class="title">Next »</span>
+    <br>
+    <span>Game Jams</span>
+  </a>
+</nav>
+
   </footer>
 </article>
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="http://localhost:1313/">Home</a></span> · 
+        <span>&copy; 2024 <a href="https://example.org/">Laurence Sadler</a></span> · 
 
     <span>
         Powered by
