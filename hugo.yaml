@@ -35,6 +35,8 @@ params:
   ShowBreadCrumbs: true
   ShowPostNavLinks: true
   images: ["/assets/favicon.ico"]
+  lable:
+    text: "Home"
   homeInfoParams:
     Title: Laurence Sadler
     Content: Hello! I'm a **Game Programmer** from the Bay Area who attended college in Nova Scotia. I enjoy developing gameplay systems and constantly expanding my knowledge in the field. I'm well-versed in **C++, C#, Python,** and game engines like **Unity and Unreal**. I am always eager to expand my skillset by learning new programming methods and experimenting with the latest technologies.
@@ -46,7 +48,7 @@ params:
     - name: "email"
       url: "mailto:sirlaurence@protonmail.com"
     - name: "cv"
-      url: "/LaurenceSadler-Resume.pdf"
+      url: "/laurence_sadler-cv.pdf"
   assets:
     disableHLJS: true
     favicon: "/assets/favicon.ico"
