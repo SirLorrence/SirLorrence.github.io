@@ -20,6 +20,11 @@ menu:
       url: /tags/
       weight: 30
 
+    - identifier: cv
+      name: CV
+      url: /LaurenceSadler-Resume.pdf
+      weight: 30
+
     - identifier: about
       name: About
       url: /about/
@@ -36,3 +41,7 @@ params:
       url: "https://github.com/SirLorrence"
     - name: "linkedin"
       url: "https://www.linkedin.com/in/laurencesadler/"
+    - name: "email"
+      url: "mailto:sirlaurence@protonmail.com"
+    - name: "cv"
+      url: "/LaurenceSadler-Resume.pdf"
