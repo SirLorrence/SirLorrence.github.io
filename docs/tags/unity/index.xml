@@ -2,16 +2,16 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Unity on Laurence Sadler</title>
-    <link>https://SirLorrence.github.io/tags/unity/</link>
+    <link>https://sirlorrence.github.io/tags/unity/</link>
     <description>Recent content in Unity on Laurence Sadler</description>
     <generator>Hugo -- 0.126.1</generator>
     <language>en-us</language>
-    <atom:link href="https://SirLorrence.github.io/tags/unity/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://sirlorrence.github.io/tags/unity/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AI Position System Prototype</title>
-      <link>https://SirLorrence.github.io/projects/positioning-system-prototype/</link>
+      <link>https://sirlorrence.github.io/projects/positioning-system-prototype/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://SirLorrence.github.io/projects/positioning-system-prototype/</guid>
+      <guid>https://sirlorrence.github.io/projects/positioning-system-prototype/</guid>
       <description>I developed a flexible enemy positioning AI, using a custom query system.</description>
     </item>
   </channel>
