@@ -3,10 +3,10 @@ title: "AI Position System Prototype"
 summary: "I developed a flexible enemy positioning AI, using a custom query system."
 tags: ["C#","Unity", "AI", "Prototype"]
 ShowToc: true
+weight: 1
 cover:
   image: "https://github.com/SirLorrence/ReadMeImages/blob/main/AI-PositionSystem-Prototype/All-together-gif.gif?raw=true"
-  imageWidth: 120 # custom size
-  imageHeight: 120
+
   # can also paste direct link from external site
   # ex. https://i.ibb.co/K0HVPBd/paper-mod-profilemode.png
   alt: "<alt text>"

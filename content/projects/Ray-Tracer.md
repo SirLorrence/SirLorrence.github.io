@@ -3,6 +3,7 @@ title: "Software Ray Tracer"
 summary: "Project using C++ to understand the working of Raytracing."
 tags: ["C++","Graphics"]
 ShowToc: true
+weight: 1
 cover:
   image: "https://github.com/SirLorrence/Simple-Raytracer/blob/main/images/Ray%20Render-HD.png?raw=true"
   imageWidth: 120 # custom size
