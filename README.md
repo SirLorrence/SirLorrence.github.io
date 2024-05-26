@@ -1,9 +1,16 @@
-# My Portfolio Site
+My personal portfolio site using [PaperMod](https://github.com/adityatelange/hugo-PaperMod).
+I just wanted at simple site that i could just put my projects and blogs on in the simplist way - this allows me to write everything in markdown (yay!). This way i can focus on projects more.
 
-Simple Website overlay 
 
-- [SirLorrence/gitfolio](https://github.com/SirLorrence/gitfolio): A fork of [gitfolio](https://github.com/imfunniee/gitfolio) by [@imfunniee](https://github.com/imfunniee) modified to what i wanted for my site
 
-- [MD-Block](https://md-block.verou.me/): To turn extracted ReadMe text to convert them to html friendly text
+### Big Help
+- https://adityatelange.github.io/hugo-PaperMod/
+- https://github.com/adityatelange/hugo-PaperMod/discussions/610
+-
+Hugo Stuff:
+- https://gohugo.io/content-management/shortcodes/
+- https://mcshelby.github.io/hugo-theme-relearn/index.html
 
-- [egoist/gh-pinned-repos](https://github.com/egoist/gh-pinned-repos): To extract json data only for pinned post
+Portfolio Refs:
+- https://main--cheerful-mousse-b9d87b.netlify.app/
+- https://pascalmichaillat.org/ and https://pmichaillat.substack.com/p/going-on-the-academic-job-market
