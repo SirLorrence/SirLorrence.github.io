@@ -2,6 +2,7 @@ baseURL: https://SirLorrence.github.io/
 languageCode: en-us
 title: Laurence Sadler
 theme: "PaperMod"
+publishDir: docs
 
 menu:
   main:
