@@ -13,7 +13,7 @@
 <link crossorigin="anonymous" href="/assets/css/stylesheet.52e33300358c98501a2416ecbb40137de1801d2c850f0646f9913dde8162339f.css" integrity="sha256-UuMzADWMmFAaJBbsu0ATfeGAHSyFDwZG&#43;ZE93oFiM58=" rel="preload stylesheet" as="style">
 <link rel="icon" href="https://sirlorrence.github.io/assets/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="https://sirlorrence.github.io/assets/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://sirlorrence.github.io/assets/favicon-32x32.png%3E">
+<link rel="icon" type="image/png" sizes="32x32" href="https://sirlorrence.github.io/assets/favicon-32x32.png">
 <link rel="apple-touch-icon" href="https://sirlorrence.github.io/assets/apple-touch-icon.png">
 <link rel="mask-icon" href="https://sirlorrence.github.io/safari-pinned-tab.svg">
 <meta name="theme-color" content="#2e2e33">
@@ -61,11 +61,14 @@
 <meta property="og:title" content="Setting up Git LFS Linode server with the help of open-source" />
 <meta property="og:description" content="To avoid splitting commits between GitHub and GitLab, I created my own LFS server on GitHub to surpass the 1GB limit. With the help of Git LFS S3 Proxy, I transferred the projects to the new server." />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://sirlorrence.github.io/posts/setting-up-linode-lfs-server/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="https://sirlorrence.github.io/posts/setting-up-linode-lfs-server/" />
+<meta property="og:image" content="https://sirlorrence.github.io/assets/favicon.ico" />
+<meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-01-24T00:00:00+00:00" />
 <meta property="article:modified_time" content="2024-01-24T00:00:00+00:00" />
 
-<meta name="twitter:card" content="summary"/>
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:image" content="https://sirlorrence.github.io/assets/favicon.ico" />
 <meta name="twitter:title" content="Setting up Git LFS Linode server with the help of open-source"/>
 <meta name="twitter:description" content="To avoid splitting commits between GitHub and GitLab, I created my own LFS server on GitHub to surpass the 1GB limit. With the help of Git LFS S3 Proxy, I transferred the projects to the new server."/>
 
@@ -103,7 +106,7 @@
   "articleBody": "For those looking to set up your Linode Server with git-lfs, I used git-lfs-s3-proxy; this is my experience with setting it up.\nMy motivation to do this stems from trying to keep all my source code on one platform. Before, I was splitting my commits between GitHub and GitLab. For game development, Gitlab is a better choice as they give you 10GB of LFS storage across all your projects, while GitHub gives you….1GB - one unreal project that had only code, and the starter assets took up more than half of my storage alongside with my other unity projects. But GitLab doesn’t have much of an open-source community like GitHub has. Plus, I want my git contribution graph to be popin.\nSo, I decided to go with GitHub and set up my own LFS server to get past the 1GB limit. Why not just buy more storage? Because each project would still add to my total LFS storage, I would have to pay more later once I reach that upper limit, even if I archive it. The only way (on GitHub) to reclaim that space is to delete the repo, and you’ll lose those commits from your contribution graph. Which no…. I want those green squares.\nOkay, that’s the motivation. Now, I had to pick a host. I decided to go with Linode, seeing that it was the most cost-effective one compared to AWS (in some cases), and I heard a lot about it from The Linux Experiment. Using ChatGPT \u0026 Bard, I thought it was going to be easy as - In the repo, initialize git lfs and use git config --global lfs.url https://your-object-storage-bucket.your-region.linodeobjects.com. Done, so I push a test 100mb file…. Nothing. I retrace my steps and use git lfs env, and the address is right, but it still doesn’t work. Now, it’s time to get some help.\nFirst, I went to Reddit to see how other people managed to get it working. Many of them were using AWS, most likely using this setup by Alan Edwardes. Well all I knew I had a S3 bucket, and I need to send data to it. What I noticed is that they all used some proxy, and then I found Git LFS S3 Proxy by Milkey Mouse. After going through his setup steps and reinitializing the repo. It started, but I was getting an Authorization error. Using GIT_TRACE=1, I showed that it was not reaching the HTTP address, and it kept trying until it timed out. Feeling lost cause I’ve been trying to make this work for two days, I filed an issue and hoped the dev would respond. Luckily, within 2 days, 2 DAYS, he came in with a fix, and it worked! Now I have my own LFS server up \u0026 running, and I managed to migrate my projects to it.\n",
   "wordCount" : "473",
   "inLanguage": "en",
-  "datePublished": "2024-01-24T00:00:00Z",
+  "image": "https://sirlorrence.github.io/assets/favicon.ico","datePublished": "2024-01-24T00:00:00Z",
   "dateModified": "2024-01-24T00:00:00Z",
   "author":{
     "@type": "Person",
