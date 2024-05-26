@@ -6,7 +6,7 @@ I just wanted at simple site that i could just put my projects and blogs on in t
 ### Big Help
 - https://adityatelange.github.io/hugo-PaperMod/
 - https://github.com/adityatelange/hugo-PaperMod/discussions/610
--
+- https://jessewei.dev/blog/2023/papermod/
 Hugo Stuff:
 - https://gohugo.io/content-management/shortcodes/
 - https://mcshelby.github.io/hugo-theme-relearn/index.html
