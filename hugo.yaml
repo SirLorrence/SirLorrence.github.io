@@ -23,7 +23,7 @@ menu:
 
     - identifier: cv
       name: CV
-      url: /LaurenceSadler-Resume.pdf
+      url: /laurence_sadler-cv.pdf
       weight: 30
 
     - identifier: about
