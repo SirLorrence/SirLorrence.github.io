@@ -48,9 +48,9 @@ I decided to learn about Ray Tracing after playing "Control" by Remedy Entertain
 ## Overview - Multi-Threading & Testing Render Speed
 This was the most exciting part of my project. Trying to figure it out took up most of my time. My first approach to this problem was to create my own thread pool. I modeled it after the object pool data structure cause that's what I use whenever I want to recycle anything within Unity - I wrote object pools before instead of an object, using a thread.
 
-[image]
-[image]
-
+Mock Up | Result
+---------|---------
+[![mockup image](/images/projects/ray-tracer/Method_1-Mockup.jpg)](/images/projects/ray-tracer/Method_1-Mockup.jpg) | [![benchmark image](https://github.com/SirLorrence/Simple-Raytracer/blob/main/images/Multi-threading-benchmarks/Ray%20Render%202023-11-01%2023:49:03-52461ms-MT-FA.png?raw=true)](https://github.com/SirLorrence/Simple-Raytracer/blob/main/images/Multi-threading-benchmarks/Ray%20Render%202023-11-01%2023:49:03-52461ms-MT-FA.png?raw=true)
 
 This worked.... kind of. The image was rendered with a minor corruption on the last line. But the big thing I noticed was that the render time increased.
 
@@ -60,17 +60,19 @@ So I went back to the drawing board. With this second method, I decided to base 
 
 The pain, is building.
 
-[image]
+![mockup image](/images/projects/ray-tracer/Method_2-Mockup.jpg)
 
 After playing around with it, using different compilers, and checking if my code was correct, I decided to test performance on other systems. I had issues on different systems using Linux, but once I tested on Windows and MacOS. It worked ~75% increase. Which was good, but why? Why, on the same system, is Linux performance worse than Windows when running multithreads? At first, with some of the research I came across, it could have been CPU affinity, the Linux scheduling system, or something low-level, which I refused to believe. So, thinking my attempt at programming a multi-threading system was a bust, I decided to implement OpenMP, but the issue persisted.
 
 The Pain is building.
 
-[image]
+[![dataset 1 image](/images/projects/ray-tracer/dataset-1.png)](/images/projects/ray-tracer/dataset-1.png)
+
 
  I kept digging, looking for a solution, and then I decided to use an IDE to debug the call stack. I found that the 'RandomDouble01()' function was often called. With each core/thread, you'll have your own stack memory (or its own cache); it was calling that function from the main memory. I ran into a cache coherence issue, which I wouldn't have known if I was programming on Windows or Mac (Linux for the win!). The solution was to add thread_local to the functions you want to be called locally. I went crazy adding them everywhere, which used randomdouble01(), reducing it to around 300-500ms. Great, until I looked at the photo…
-[image]
+
+ ![corrupted image](https://github.com/SirLorrence/Simple-Raytracer/blob/main/images/Failures/Ray%20Render%202024-01-09%2020:41:00.png?raw=true)
 
 I had to step back. Why not just apply thread_local to RandomDouble01() itself? It still corrupted the image. I was stumped. I returned to the drawing board again and came across the phrase "thread safe". I looked up if rand() is a thread-safe function; it was not. Using the recommended C++ random function I had seen everywhere, I looked for an alternative to rand() and added thread_local; it worked. Reruning all my tests, seeing the improvements. Even managed to beat out OpenMP with my second method. I also wanted to try more things, such as Tiling. Divide large datasets into smaller tiles, processing one tile pre-thread. Here are the results.
 
-[image]
+[![dataset 2 image](/images/projects/ray-tracer/dataset-2.png)](/images/projects/ray-tracer/dataset-2.png)
