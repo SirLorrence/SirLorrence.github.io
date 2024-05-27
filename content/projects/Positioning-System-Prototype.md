@@ -129,3 +129,9 @@ public void Evaluate() {
 
 ### Take Aways
 Working on the project and learning how others implemented it, mine is a very simplified version, though most core concepts are the same. My version can be expanded further, and I'm glad I've coded it so you can create another query behavior and easily plug it in. I found how Ubisoft did it in the Division interesting because they baked the position points into the map data, and the complexity of their NPC systems is impressive.
+
+
+### References
+- [Blending Autonomy and Control: Creating NPCs for Tom Clancy's The Division](https://youtu.be/Vre9qqoEBpE?si=2FasCi1i7qWfbg9r)
+- [Implementing robust AI for SecondHand: Enemy Positioning](https://www.rikodu.com/implementing-robust-ai-for-secondhand-enemy-positioning/)
+- [Unreal Engine AI with Behavior Trees | Unreal Engine](https://youtu.be/iY1jnFvHgbE?si=R9yMa_Wdr_G9PZ85&t=1160)
