@@ -2,7 +2,7 @@ baseURL: https://laurencesadler.com/
 languageCode: en-us
 title: Laurence Sadler
 theme: "PaperMod"
-publishDir: docs
+#publishDir: docs
 
 menu:
   main:
