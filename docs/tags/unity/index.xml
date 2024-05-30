@@ -2,21 +2,21 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Unity on Laurence Sadler</title>
-    <link>https://sirlorrence.github.io/tags/unity/</link>
+    <link>https://www.laurencesadler.com/tags/unity/</link>
     <description>Recent content in Unity on Laurence Sadler</description>
     <image>
       <title>Laurence Sadler</title>
-      <url>https://sirlorrence.github.io/assets/favicon.ico</url>
-      <link>https://sirlorrence.github.io/assets/favicon.ico</link>
+      <url>https://www.laurencesadler.com/assets/favicon.ico</url>
+      <link>https://www.laurencesadler.com/assets/favicon.ico</link>
     </image>
     <generator>Hugo -- 0.126.1</generator>
     <language>en-us</language>
-    <atom:link href="https://sirlorrence.github.io/tags/unity/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.laurencesadler.com/tags/unity/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>AI Position System Prototype</title>
-      <link>https://sirlorrence.github.io/projects/positioning-system-prototype/</link>
+      <link>https://www.laurencesadler.com/projects/positioning-system-prototype/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://sirlorrence.github.io/projects/positioning-system-prototype/</guid>
+      <guid>https://www.laurencesadler.com/projects/positioning-system-prototype/</guid>
       <description>I developed a flexible enemy positioning AI, using a custom query system.</description>
     </item>
   </channel>

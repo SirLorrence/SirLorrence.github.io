@@ -2,22 +2,22 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on Laurence Sadler</title>
-    <link>https://sirlorrence.github.io/posts/</link>
+    <link>https://www.laurencesadler.com/posts/</link>
     <description>Recent content in Posts on Laurence Sadler</description>
     <image>
       <title>Laurence Sadler</title>
-      <url>https://sirlorrence.github.io/assets/favicon.ico</url>
-      <link>https://sirlorrence.github.io/assets/favicon.ico</link>
+      <url>https://www.laurencesadler.com/assets/favicon.ico</url>
+      <link>https://www.laurencesadler.com/assets/favicon.ico</link>
     </image>
     <generator>Hugo -- 0.126.1</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 24 Jan 2024 00:00:00 +0000</lastBuildDate>
-    <atom:link href="https://sirlorrence.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://www.laurencesadler.com/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Setting up Git LFS Linode server with the help of open-source</title>
-      <link>https://sirlorrence.github.io/posts/setting-up-linode-lfs-server/</link>
+      <link>https://www.laurencesadler.com/posts/setting-up-linode-lfs-server/</link>
       <pubDate>Wed, 24 Jan 2024 00:00:00 +0000</pubDate>
-      <guid>https://sirlorrence.github.io/posts/setting-up-linode-lfs-server/</guid>
+      <guid>https://www.laurencesadler.com/posts/setting-up-linode-lfs-server/</guid>
       <description>To avoid splitting commits between GitHub and GitLab, I created my own LFS server on GitHub to surpass the 1GB limit. With the help of Git LFS S3 Proxy, I transferred the projects to the new server.</description>
     </item>
   </channel>
