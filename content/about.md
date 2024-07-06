@@ -23,7 +23,7 @@ Soft Skills: **Scrum & Agile Methodologies, Jira, Trello, Testing and Debugging*
 
 **Nova Scotia Community College (2019 - 2021)**
 
-**_Game Programming and Design Diploma_**
+**_Game Programming and Design Degree_**
 
 C# | Unity | Game Development Pipeline | Game Data Structures | Game Design Theory
 
