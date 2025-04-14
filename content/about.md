@@ -27,14 +27,21 @@ Soft Skills: **Scrum & Agile Methodologies, Jira, Trello, Testing and Debugging*
 
 C# | Unity | Game Development Pipeline | Game Data Structures | Game Design Theory
 
+## Related Classes
+- College Algebra
+- Calculus I (In progress)
+- Linear Algebra (In progress - Self-Study)
+
 # More
 
-## What I Use
+{{< columns >}}
+
+## What (tools) I Use
 - Jetbrain - Rider
 - Zed
 - VScode
-- Linux
-- Windows 11
+
+<--->
 
 ## Interests
 - Video Games (well yeah...)
@@ -43,3 +50,5 @@ C# | Unity | Game Development Pipeline | Game Data Structures | Game Design Theo
 - Movies
 - Old Amines
 - French
+
+{{< /columns >}}
