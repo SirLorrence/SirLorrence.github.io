@@ -8,7 +8,7 @@ I'm an eager programmer and eager learner from California. I'm incredibly passio
 
 My main interest is in the gameplay area of development. I've always admired how gameplay mechanics and sound design can create immersive experiences and excellent game feel.
 
-Want to get to know me more or discuss job opportunities - Toss me a line
+Want to get to know me more or discuss job opportunities - [Toss me a line](mailto:sirlaurence@protonmail.com)
 
 # Skills
 
@@ -23,7 +23,7 @@ Soft Skills: **Scrum & Agile Methodologies, Jira, Trello, Testing and Debugging*
 
 **Nova Scotia Community College (2019 - 2021)**
 
-**_Game Programming and Design Diploma_**
+**_Game Programming and Design Degree_**
 
 C# | Unity | Game Development Pipeline | Game Data Structures | Game Design Theory
 
