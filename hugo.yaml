@@ -23,7 +23,7 @@ menu:
 
     - identifier: cv
       name: CV
-      url: /laurence_sadler-cv.pdf
+      url: /LaurenceSadler-Resume.pdf
       weight: 30
 
     - identifier: about
@@ -48,7 +48,7 @@ params:
     - name: "email"
       url: "mailto:sirlaurence@protonmail.com"
     - name: "cv"
-      url: "/laurence_sadler-cv.pdf"
+      url: "/LaurenceSadler-Resume.pdf"
   assets:
     disableHLJS: true
     favicon: "/assets/favicon.ico"
