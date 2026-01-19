@@ -4,9 +4,9 @@
 
 # Helloooo (Again), my name is Laurence.
 
-I'm an eager programmer and eager learner from California. I'm incredibly passionate about video games, game development, and programming/graphic techniques within that area.
+I'm an eager software engineer and eager learner from California. I'm incredibly passionate about video games, game development, llms, and programming/graphic techniques within that area.
 
-My main interest is in the gameplay area of development. I've always admired how gameplay mechanics and sound design can create immersive experiences and excellent game feel.
+<!--My main interest is in the gameplay area of development. I've always admired how gameplay mechanics and sound design can create immersive experiences and excellent game feel.-->
 
 Want to get to know me more or discuss job opportunities - [Toss me a line](mailto:sirlaurence@protonmail.com)
 
@@ -27,19 +27,19 @@ Soft Skills: **Scrum & Agile Methodologies, Jira, Trello, Testing and Debugging*
 
 C# | Unity | Game Development Pipeline | Game Data Structures | Game Design Theory
 
-## Related Classes
+<!--## Related Classes
 - College Algebra
 - Calculus I (In progress)
-- Linear Algebra (In progress - Self-Study)
+- Linear Algebra (In progress - Self-Study)-->
 
 # More
 
 {{< columns >}}
 
 ## What (tools) I Use
-- Jetbrain - Rider
 - Zed
-- VScode
+- Claude Code (at work)
+- Jetbrain - Rider
 
 <--->
 
