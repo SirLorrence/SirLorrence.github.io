@@ -4,9 +4,7 @@
 
 # Helloooo (Again), my name is Laurence.
 
-I'm an eager software engineer and eager learner from California. I'm incredibly passionate about video games, game development, llms, and programming/graphic techniques within that area.
-
-<!--My main interest is in the gameplay area of development. I've always admired how gameplay mechanics and sound design can create immersive experiences and excellent game feel.-->
+I'm a software engineer based in California, currently working in software QA. I'm passionate about video games, game development, LLMs, and the programming and graphics techniques that make them work
 
 Want to get to know me more or discuss job opportunities - [Toss me a line](mailto:sirlaurence@protonmail.com)
 
@@ -14,9 +12,9 @@ Want to get to know me more or discuss job opportunities - [Toss me a line](mail
 
 Programming Languages: **C++, C#, Python**
 
-Software and Tools: **Unity, Unreal, Git (Github and Gitlab)**
+Software and Tools: **Claude Code, Unity, Unreal, Git (Github and Gitlab)**
 
-Soft Skills: **Scrum & Agile Methodologies, Jira, Trello, Testing and Debugging**
+Soft Skills: **Linear, Jira, Trello, Scrum & Agile Methodologies, Testing and Debugging**
 
 
 # Education
@@ -44,7 +42,7 @@ C# | Unity | Game Development Pipeline | Game Data Structures | Game Design Theo
 <--->
 
 ## Interests
-- Video Games (well yeah...)
+- Video Games 
 - Food & Cooking
 - Photography
 - Movies
