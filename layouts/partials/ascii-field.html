@@ -1,0 +1,422 @@
+<div class="ascii-field">
+  <canvas id="ascii-hero" class="ascii-canvas ascii-field__canvas" role="img" aria-label="A floating ASCII toy engineer wearing round glasses, with a cat on its head, a sage laptop, and a steaming coffee cup beside it, suspended in a gently twinkling starfield.">Laurence's floating toy engineer, cat, laptop, and coffee rendered as an ASCII starfield.</canvas>
+  <template id="ascii-mascot-source">{{- partial "mascot.html" . -}}</template>
+</div>
+<button class="field-toggle" id="field-toggle" type="button" aria-controls="ascii-hero" aria-pressed="false">Pause field</button>
+
+<script>
+(() => {
+  "use strict";
+
+  const RAMP = " .,:;o*@";
+  const FIELD_COLOR = "#9aa6e8";
+  const HIGHLIGHT_COLOR = "#e2622a";
+  const MONO_STACK = '"Geist Mono", ui-monospace, SFMono-Regular, Consolas, monospace';
+  const FIGURE_COLUMNS = 60;
+  const FIGURE_FLOOR = 0.30;
+  const SVG_WIDTH = 420;
+  const SVG_HEIGHT = 520;
+
+  const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
+
+  function seededRandom(seed) {
+    return () => {
+      seed |= 0;
+      seed = seed + 0x6D2B79F5 | 0;
+      let value = Math.imul(seed ^ seed >>> 15, 1 | seed);
+      value = value + Math.imul(value ^ value >>> 7, 61 | value) ^ value;
+      return ((value ^ value >>> 14) >>> 0) / 4294967296;
+    };
+  }
+
+  function measureMono(ctx, fontSize) {
+    ctx.font = `450 ${fontSize}px ${MONO_STACK}`;
+    const measured = ctx.measureText("M");
+    const glyphHeight = measured.actualBoundingBoxAscent + measured.actualBoundingBoxDescent;
+    return {
+      fontSize,
+      cellWidth: measured.width,
+      // Both dimensions come from the rendered font, not a fixed 7 × 13 guess.
+      cellHeight: Math.max(1, glyphHeight * 1.24)
+    };
+  }
+
+  function fitGrid(ctx, width, height, columns, rows) {
+    const unit = measureMono(ctx, 16);
+    const horizontalScale = (width / columns) / unit.cellWidth;
+    const verticalScale = (height / rows) / unit.cellHeight;
+    const fontSize = Math.max(3, 16 * Math.min(horizontalScale, verticalScale));
+    const measured = measureMono(ctx, fontSize);
+    return {
+      ...measured,
+      columns,
+      rows,
+      width,
+      height,
+      offsetX: (width - measured.cellWidth * columns) / 2,
+      offsetY: (height - measured.cellHeight * rows) / 2
+    };
+  }
+
+  function sizeCanvas(canvas, width, height) {
+    const ratio = Math.min(window.devicePixelRatio || 1, 2);
+    canvas.width = Math.max(1, Math.round(width * ratio));
+    canvas.height = Math.max(1, Math.round(height * ratio));
+    const ctx = canvas.getContext("2d", { alpha: true });
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    return ctx;
+  }
+
+  // The hero and all project thumbnails share this exact ramp and paint pass.
+  function paint(ctx, buffer, metrics, accent = true) {
+    const { columns, rows, cellWidth, cellHeight, fontSize, width, height, offsetX, offsetY } = metrics;
+    ctx.clearRect(0, 0, width, height);
+    ctx.font = `450 ${fontSize}px ${MONO_STACK}`;
+    ctx.textAlign = "left";
+    ctx.textBaseline = "top";
+    ctx.fillStyle = FIELD_COLOR;
+
+    const highlights = [];
+    for (let y = 0; y < rows; y += 1) {
+      let row = "";
+      for (let x = 0; x < columns; x += 1) {
+        const luminance = clamp(buffer[y * columns + x]);
+        const level = luminance <= 0.012 ? 0 : Math.max(1, Math.round(luminance * (RAMP.length - 1)));
+        const character = RAMP[level];
+        row += character;
+        // Only a deterministic, sparse fraction of the brightest cells turn amber.
+        if (accent && luminance >= 0.92 && ((x * 17 + y * 31) % 19 === 0)) {
+          highlights.push({ x, y, character });
+        }
+      }
+      // One fillText call per row for the complete periwinkle base.
+      ctx.fillText(row, offsetX, offsetY + y * cellHeight);
+    }
+
+    ctx.fillStyle = HIGHLIGHT_COLOR;
+    for (const cell of highlights) {
+      ctx.fillText(cell.character, offsetX + cell.x * cellWidth, offsetY + cell.y * cellHeight);
+    }
+  }
+
+  function makeStars(columns, rows) {
+    const random = seededRandom(41027);
+    return Array.from({ length: 150 }, () => ({
+      x: random() * columns,
+      y: random() * rows,
+      luminance: 0.10 + random() * 0.30,
+      phase: random() * Math.PI * 2,
+      drift: 0.035 + random() * 0.035
+    }));
+  }
+
+  function starBuffer(stars, columns, rows, elapsed) {
+    const buffer = new Float32Array(columns * rows);
+    for (const star of stars) {
+      const x = Math.floor(star.x) % columns;
+      const y = Math.floor(star.y + elapsed * star.drift) % rows;
+      const twinkle = 0.86 + Math.sin(elapsed * 0.48 + star.phase) * 0.14;
+      const index = y * columns + x;
+      buffer[index] = Math.max(buffer[index], star.luminance * twinkle);
+    }
+    return buffer;
+  }
+
+  function mascotSVG() {
+    const template = document.getElementById("ascii-mascot-source");
+    const svg = template.content.firstElementChild.cloneNode(true);
+    // Steam remains specified in the SVG, but is animated as cells separately.
+    svg.querySelectorAll("[data-steam]").forEach(node => node.remove());
+    return new XMLSerializer().serializeToString(svg);
+  }
+
+  function setupHero() {
+    const canvas = document.getElementById("ascii-hero");
+    const toggle = document.getElementById("field-toggle");
+    if (!canvas || !toggle) return null;
+
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let ctx;
+    let metrics;
+    let columns;
+    let rows;
+    let stars;
+    let figure;
+    let mascotImage = null;
+    let elapsed = 0;
+    let previousTime = 0;
+    let animationFrame = 0;
+    let paused = false;
+
+    function rasterizeFigure() {
+      if (!mascotImage || !metrics) return;
+
+      // Convert cell-space geometry through the measured cell aspect ratio:
+      // physicalWidth = columns * cellWidth, then physicalHeight / cellHeight.
+      // This cellHeight / cellWidth correction prevents a narrow, squashed figure.
+      const cellAspect = metrics.cellHeight / metrics.cellWidth;
+      const figureRows = Math.max(30, Math.round(FIGURE_COLUMNS * (SVG_HEIGHT / SVG_WIDTH) / cellAspect));
+      const offscreen = document.createElement("canvas");
+      offscreen.width = FIGURE_COLUMNS;
+      offscreen.height = figureRows;
+      const offscreenContext = offscreen.getContext("2d", { willReadFrequently: true });
+      offscreenContext.drawImage(mascotImage, 0, 0, FIGURE_COLUMNS, figureRows);
+      const pixels = offscreenContext.getImageData(0, 0, FIGURE_COLUMNS, figureRows).data;
+
+      const alphaChannel = new Float32Array(FIGURE_COLUMNS * figureRows);
+      const luminanceChannel = new Float32Array(FIGURE_COLUMNS * figureRows);
+      for (let index = 0; index < alphaChannel.length; index += 1) {
+        const pixel = index * 4;
+        const alpha = pixels[pixel + 3] / 255;
+        if (alpha <= 0.08) continue;
+
+        const red = pixels[pixel] / 255;
+        const green = pixels[pixel + 1] / 255;
+        const blue = pixels[pixel + 2] / 255;
+        const rgbLuminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+
+        // Channel one identifies the silhouette; channel two adds density upward
+        // from its floor. No feature can become a hole darker than the silhouette.
+        alphaChannel[index] = alpha;
+        luminanceChannel[index] = FIGURE_FLOOR + (1 - FIGURE_FLOOR) * rgbLuminance;
+      }
+      figure = { columns: FIGURE_COLUMNS, rows: figureRows, alphaChannel, luminanceChannel };
+    }
+
+    function compositeFigure(buffer, bob) {
+      if (!figure) return;
+      const originX = Math.max(1, columns - figure.columns - Math.round(columns * 0.07));
+      const preferredY = columns === 150 ? Math.round(rows * 0.13) : rows - figure.rows - 3;
+      const originY = clamp(preferredY + bob, 1, Math.max(1, rows - figure.rows - 1));
+
+      for (let y = 0; y < figure.rows; y += 1) {
+        const targetY = originY + y;
+        if (targetY < 0 || targetY >= rows) continue;
+        for (let x = 0; x < figure.columns; x += 1) {
+          const targetX = originX + x;
+          if (targetX < 0 || targetX >= columns) continue;
+          const sourceIndex = y * figure.columns + x;
+          if (figure.alphaChannel[sourceIndex] > 0.08) {
+            buffer[targetY * columns + targetX] = Math.max(FIGURE_FLOOR, figure.luminanceChannel[sourceIndex]);
+          }
+        }
+      }
+
+      // Three staggered steam wisps drift upward and fade inside the same buffer.
+      for (let wisp = 0; wisp < 3; wisp += 1) {
+        const phase = (elapsed * 0.16 + wisp / 3 + 0.18) % 1;
+        for (let segment = 0; segment < 7; segment += 1) {
+          const progress = phase + segment * 0.025;
+          if (progress >= 1) continue;
+          const sourceX = 339 + wisp * 18 + Math.sin(progress * 7 + wisp) * 6;
+          const sourceY = 264 - progress * 62;
+          const x = originX + Math.floor(sourceX / SVG_WIDTH * figure.columns);
+          const y = originY + Math.floor(sourceY / SVG_HEIGHT * figure.rows);
+          if (x < 0 || x >= columns || y < 0 || y >= rows) continue;
+          const fade = Math.sin(progress * Math.PI) * (1 - segment / 8);
+          if (fade > 0.07) {
+            const index = y * columns + x;
+            buffer[index] = Math.max(buffer[index], FIGURE_FLOOR + fade * 0.58);
+          }
+        }
+      }
+    }
+
+    function draw() {
+      if (!ctx || !metrics) return;
+      const buffer = starBuffer(stars, columns, rows, elapsed);
+      const bob = Math.round(Math.sin(elapsed * Math.PI * 2 / 7) * 2);
+      compositeFigure(buffer, bob);
+      paint(ctx, buffer, metrics);
+    }
+
+    function rebuild() {
+      const bounds = canvas.getBoundingClientRect();
+      if (bounds.width < 1 || bounds.height < 1) return;
+      columns = bounds.width < 640 ? 100 : 150;
+      rows = bounds.width < 640 ? 64 : 56;
+      ctx = sizeCanvas(canvas, bounds.width, bounds.height);
+      metrics = fitGrid(ctx, bounds.width, bounds.height, columns, rows);
+      stars = makeStars(columns, rows);
+      rasterizeFigure();
+      draw();
+    }
+
+    function tick(time) {
+      if (paused || motionQuery.matches) {
+        animationFrame = 0;
+        return;
+      }
+      if (previousTime) elapsed += Math.min(0.05, (time - previousTime) / 1000);
+      previousTime = time;
+      draw();
+      animationFrame = requestAnimationFrame(tick);
+    }
+
+    function start() {
+      if (paused || motionQuery.matches || animationFrame) return;
+      previousTime = 0;
+      animationFrame = requestAnimationFrame(tick);
+    }
+
+    toggle.addEventListener("click", () => {
+      paused = !paused;
+      toggle.setAttribute("aria-pressed", String(paused));
+      toggle.textContent = paused ? "Resume field" : "Pause field";
+      if (paused) {
+        cancelAnimationFrame(animationFrame);
+        animationFrame = 0;
+        previousTime = 0;
+        // Deliberately no clearRect: pausing freezes the current painted frame.
+      } else {
+        start();
+      }
+    });
+
+    motionQuery.addEventListener("change", () => {
+      cancelAnimationFrame(animationFrame);
+      animationFrame = 0;
+      previousTime = 0;
+      toggle.hidden = motionQuery.matches;
+      if (motionQuery.matches) {
+        elapsed = 0;
+        draw();
+      } else {
+        start();
+      }
+    });
+
+    const source = new Blob([mascotSVG()], { type: "image/svg+xml;charset=utf-8" });
+    const sourceURL = URL.createObjectURL(source);
+    mascotImage = new Image();
+    mascotImage.onload = () => {
+      URL.revokeObjectURL(sourceURL);
+      rasterizeFigure();
+      draw();
+    };
+    mascotImage.onerror = () => URL.revokeObjectURL(sourceURL);
+    mascotImage.src = sourceURL;
+
+    toggle.hidden = motionQuery.matches;
+    rebuild();
+    if (!motionQuery.matches) start();
+    return { rebuild, redraw: draw };
+  }
+
+  function motifBuffer(scene, metrics) {
+    const { columns, rows, cellWidth, cellHeight } = metrics;
+    const buffer = new Float32Array(columns * rows);
+    const width = columns * cellWidth;
+    const height = rows * cellHeight;
+
+    for (let y = 0; y < rows; y += 1) {
+      for (let x = 0; x < columns; x += 1) {
+        const index = y * columns + x;
+        const px = (x + 0.5) * cellWidth;
+        const py = (y + 0.5) * cellHeight;
+        let luminance = (x % 9 === 0 && y % 7 === 0) ? 0.10 : 0.012;
+
+        if (scene === "rings") {
+          const dx = px - width * 0.5;
+          const dy = py - height * 0.5;
+          const distance = Math.hypot(dx, dy);
+          const radius = Math.min(width, height) * 0.46;
+          for (const ring of [0.24, 0.46, 0.69, 0.92]) {
+            const separation = distance - radius * ring;
+            luminance = Math.max(luminance, 0.74 * Math.exp(-(separation * separation) / 5));
+          }
+          for (let node = 0; node < 12; node += 1) {
+            const angle = node * Math.PI * 2 / 12;
+            const ringRadius = radius * [0.46, 0.69, 0.92][node % 3];
+            const nx = width * 0.5 + Math.cos(angle) * ringRadius;
+            const ny = height * 0.5 + Math.sin(angle) * ringRadius;
+            if (Math.hypot(px - nx, py - ny) < Math.max(cellWidth, cellHeight) * 0.65) luminance = 0.98;
+          }
+        } else if (scene === "sphere") {
+          const radius = Math.min(width, height) * 0.39;
+          const nx = (px - width * 0.5) / radius;
+          const ny = (py - height * 0.51) / radius;
+          const distanceSquared = nx * nx + ny * ny;
+          if (distanceSquared <= 1) {
+            const nz = Math.sqrt(1 - distanceSquared);
+            const light = clamp((-0.43 * nx - 0.50 * ny + 0.75 * nz) / 1.02, -1, 1);
+            luminance = 0.18 + Math.max(0, light) * 0.82;
+          }
+        } else {
+          const panels = [
+            [0.10, 0.17, 0.50, 0.57, 0.76],
+            [0.39, 0.29, 0.50, 0.55, 0.62],
+            [0.20, 0.48, 0.43, 0.37, 0.88]
+          ];
+          for (const panel of panels) {
+            const left = width * panel[0];
+            const top = height * panel[1];
+            const panelWidth = width * panel[2];
+            const panelHeight = height * panel[3];
+            const insideX = px >= left && px <= left + panelWidth;
+            const insideY = py >= top && py <= top + panelHeight;
+            if (insideX && insideY) luminance = Math.max(luminance, 0.08);
+            if (insideX && insideY) {
+              const edge = Math.min(px - left, left + panelWidth - px, py - top, top + panelHeight - py);
+              if (edge < Math.max(cellWidth, cellHeight) * 0.52) luminance = Math.max(luminance, panel[4]);
+            }
+          }
+          if (Math.hypot(px - width * 0.2, py - height * 0.48) < cellWidth * 0.7) luminance = 0.98;
+        }
+        buffer[index] = clamp(luminance);
+      }
+    }
+    return buffer;
+  }
+
+  function setupThumbnail(canvas) {
+    let ctx;
+    let metrics;
+    function render() {
+      const bounds = canvas.getBoundingClientRect();
+      if (bounds.width < 1 || bounds.height < 1) return;
+      ctx = sizeCanvas(canvas, bounds.width, bounds.height);
+      const unit = measureMono(ctx, 13);
+      const columns = Math.max(28, Math.floor(bounds.width / unit.cellWidth));
+      const rows = Math.max(12, Math.floor(bounds.height / unit.cellHeight));
+      metrics = fitGrid(ctx, bounds.width, bounds.height, columns, rows);
+      paint(ctx, motifBuffer(canvas.dataset.asciiScene || "grid", metrics), metrics);
+    }
+    render();
+    return { rebuild: render, redraw: render };
+  }
+
+  function initialize() {
+    const fields = [];
+    const hero = setupHero();
+    if (hero) fields.push(hero);
+    document.querySelectorAll("[data-ascii-scene]").forEach(canvas => {
+      fields.push(setupThumbnail(canvas));
+    });
+
+    let resizeFrame = 0;
+    const rebuild = () => {
+      cancelAnimationFrame(resizeFrame);
+      resizeFrame = requestAnimationFrame(() => fields.forEach(field => field.rebuild()));
+    };
+    if ("ResizeObserver" in window) {
+      const observer = new ResizeObserver(rebuild);
+      document.querySelectorAll(".home-hero, .project-card__visual").forEach(element => observer.observe(element));
+    } else {
+      window.addEventListener("resize", rebuild, { passive: true });
+    }
+
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(() => fields.forEach(field => field.rebuild()));
+    }
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initialize, { once: true });
+  } else {
+    initialize();
+  }
+})();
+</script>

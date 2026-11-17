@@ -1,0 +1,25 @@
+{{- $homeURL := site.Home.RelPermalink -}}
+{{- $projectsURL := "/projects/" | relURL -}}
+{{- $postsURL := "/posts/" | relURL -}}
+{{- $aboutURL := "/about/" | relURL -}}
+<header class="home-header">
+  <nav class="home-nav" aria-label="Primary navigation">
+    <a class="home-brand" href="{{ $homeURL }}" aria-label="Laurence Sadler, home">
+      <span class="home-brand__mark" aria-hidden="true">LS</span>
+      <span>Laurence Sadler</span>
+    </a>
+
+    <div class="home-nav__sections">
+      <a href="{{ if .IsHome }}#work{{ else }}{{ $homeURL }}#work{{ end }}"><span>01</span> Work</a>
+      <a href="{{ if .IsHome }}#experience{{ else }}{{ $homeURL }}#experience{{ end }}"><span>02</span> Experience</a>
+      <a href="{{ if .IsHome }}#contact{{ else }}{{ $homeURL }}#contact{{ end }}"><span>03</span> Contact</a>
+    </div>
+
+    <div class="home-nav__pages">
+      <a href="{{ $projectsURL }}"{{ if eq .Section "projects" }} class="is-active" aria-current="page"{{ end }}>Projects</a>
+      <a href="{{ $postsURL }}"{{ if eq .Section "posts" }} class="is-active" aria-current="page"{{ end }}>Blogs</a>
+      <a href="{{ $aboutURL }}"{{ if eq .RelPermalink $aboutURL }} class="is-active" aria-current="page"{{ end }}>About</a>
+      <a href="{{ "/laurence_sadler-cv.pdf" | relURL }}">CV</a>
+    </div>
+  </nav>
+</header>

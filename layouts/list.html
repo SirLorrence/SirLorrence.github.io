@@ -49,7 +49,7 @@
 {{- if and .IsHome site.Params.homeInfoParams (eq $paginator.PageNumber 1) }}
 {{- partial "home_info.html" . }}
 {{- end }}
-<div style="display:grid;grid-template-columns: repeat(auto-fit, minmax(285px, 3fr)); column-gap:0.5em;">
+<div class="page-grid">
 
 {{- $term := .Data.Term }}
 {{- range $index, $page := $paginator.Pages }}
