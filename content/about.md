@@ -4,7 +4,7 @@
 
 # Helloooo (Again), my name is Laurence.
 
-I'm a software engineer based in California, currently working in software QA. I'm passionate about video games, game development, LLMs, and the programming and graphics techniques that make them work
+I'm a software engineer based in California. I've worked in game development and software validation. These days I'm leaning toward AI engineering and simulation, with robotics as a maybe. I like systems, graphics, and figuring out why one version of a program feels faster than another. (Sometimes, it's just based on vibes.)
 
 Want to get to know me more or discuss job opportunities - [Toss me a line](mailto:sirlaurence@protonmail.com)
 

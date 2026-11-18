@@ -39,7 +39,7 @@ params:
     text: "Home"
   homeInfoParams:
     Title: Laurence Sadler
-    Content: I'm a Software Engineer based in the Bay Area. I enjoy building gameplay systems and diving deep into systems and performance-oriented programming
+    Content: "I'm a software engineer. I build systems and tools, and I like making them easier to understand and faster to run."
   socialIcons: # optional
     - name: "github"
       url: "https://github.com/SirLorrence"

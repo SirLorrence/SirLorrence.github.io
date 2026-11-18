@@ -38,11 +38,19 @@
 </div>
 {{- end }}
 {{- if or (eq .Section "projects") (eq .Type "projects") }}
+{{- $gridProjects := slice -}}
+{{- $asideProjects := slice -}}
+{{- range .Pages.ByWeight -}}
+  {{- if ne .Params.grid false -}}{{- $gridProjects = $gridProjects | append . -}}{{- else -}}{{- $asideProjects = $asideProjects | append . -}}{{- end -}}
+{{- end -}}
 <div class="project-grid">
-  {{- range $index, $page := .Pages.ByWeight }}
+  {{- range $index, $page := $gridProjects }}
   {{- partial "project-card.html" (dict "page" $page "index" $index "heading" "h2") }}
   {{- end }}
 </div>
+{{- range $asideProjects }}
+<p class="project-aside micro-label">Also: <a href="{{ .RelPermalink }}">small projects and game jams <span aria-hidden="true">↗</span></a></p>
+{{- end }}
 {{- partial "ascii-scripts.html" . }}
 {{- else }}
 {{- $pages := union .RegularPages .Sections }}

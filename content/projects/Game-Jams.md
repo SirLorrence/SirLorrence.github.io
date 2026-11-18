@@ -3,6 +3,7 @@ title: "Game Jams"
 summary: "Collection of Projects from Game Jams"
 ShowToc: true
 weight: 3
+grid: false
 cover:
   image: "images/covers/GameJam.png"
 ---

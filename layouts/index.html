@@ -13,10 +13,10 @@
       <div class="home-hero__content">
         <p class="micro-label home-hero__status">
           <span class="status-dot" aria-hidden="true"></span>
-          Software engineer / California
+          Software engineer
         </p>
         <h1 id="hero-title">Laurence<br>Sadler<span class="hero-period">.</span></h1>
-        <p class="home-hero__intro">{{ site.Params.homeInfoParams.Content | default "Software engineer interested in gameplay systems, graphics, and performance-oriented programming." }}</p>
+        <p class="home-hero__intro">{{ site.Params.homeInfoParams.Content | default "I'm a software engineer. I build systems and tools, and I like making them easier to understand and faster to run." }}</p>
         <div class="home-hero__actions">
           <a class="action-primary" href="#work">Explore my work <span aria-hidden="true">↗</span></a>
           <a class="action-secondary" href="{{ "/laurence_sadler-cv.pdf" | relURL }}" download>Download resume <span aria-hidden="true">↓</span></a>
@@ -38,16 +38,24 @@
       <header class="section-heading">
         <p class="micro-label">01 / Selected projects</p>
         <h2 id="work-title">Selected projects</h2>
-        <p>Gameplay systems, graphics experiments, and tools built to understand how things work beneath the surface.</p>
+        <p>Systems and tools I've built to learn how they work.</p>
       </header>
 
       {{- $projects := where site.RegularPages "Section" "projects" -}}
       {{- $projects = $projects.ByWeight -}}
+      {{- $gridProjects := slice -}}
+      {{- $asideProjects := slice -}}
+      {{- range $projects -}}
+        {{- if ne .Params.grid false -}}{{- $gridProjects = $gridProjects | append . -}}{{- else -}}{{- $asideProjects = $asideProjects | append . -}}{{- end -}}
+      {{- end -}}
       <div class="project-grid">
-        {{- range $index, $project := $projects -}}
+        {{- range $index, $project := $gridProjects -}}
           {{- partial "project-card.html" (dict "page" $project "index" $index) -}}
         {{- end -}}
       </div>
+      {{- range $asideProjects }}
+      <p class="project-aside micro-label">Also: <a href="{{ .RelPermalink }}">small projects and game jams <span aria-hidden="true">↗</span></a></p>
+      {{- end }}
       <a class="text-link section-link" href="{{ "/projects/" | relURL }}">Browse the project index</a>
     </section>
 
@@ -120,7 +128,7 @@
             <img src="{{ "/images/Me.jpg" | relURL }}" alt="Laurence Sadler" width="1260" height="1260" loading="lazy" decoding="async">
           </figure>
           <h2 id="about-title" class="about-statement">Software Boi <span class="about-kaomoji" aria-hidden="true">(¬_¬)</span></h2>
-          <p class="about-bio">I'm a software engineer based in California, currently working in software QA. I'm passionate about video games, game development, LLMs, and the programming and graphics techniques that make them work.</p>
+          <p class="about-bio">I'm a software engineer based in California. I've worked in game development and software validation. These days I'm leaning toward AI engineering and simulation, with robotics as a maybe. I like systems, graphics, and figuring out why one version of a program feels faster than another. (Sometimes, it's just based on vibes.)</p>
         </div>
         <div class="about-details">
           <article class="about-detail">
@@ -164,10 +172,10 @@
         <p class="micro-label">04 / Get in touch</p>
         <h2 id="contact-title">Contact</h2>
       </header>
-      <p class="home-contact__prompt">Want to talk games, graphics, software, or an opportunity?</p>
+      <p class="home-contact__prompt">If you want to talk shop or have a project in mind, email is the best place to start.</p>
       <a class="home-contact__email" href="{{ $email }}">{{ replace $email "mailto:" "" }}</a>
       <a class="contact-resume" href="{{ "/laurence_sadler-cv.pdf" | relURL }}" download>
-        <span class="micro-label">Curriculum vitae / PDF</span>
+        <span class="micro-label">Resume / PDF</span>
         <span>Download resume <span aria-hidden="true">↓</span></span>
       </a>
       <div class="home-contact__socials">

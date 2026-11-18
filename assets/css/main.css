@@ -523,6 +523,29 @@ body.home-page {
   width: 100%;
 }
 
+.project-aside {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin-top: 28px !important;
+}
+
+.project-aside a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--muted);
+  text-decoration: underline;
+  text-decoration-color: var(--hairline);
+  text-underline-offset: 4px;
+}
+
+.project-aside a:hover {
+  color: var(--accent);
+  text-decoration-color: var(--accent);
+}
+
 .project-card:hover,
 .project-card:focus-within {
   border-color: rgba(20, 19, 26, .32);
