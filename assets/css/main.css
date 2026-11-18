@@ -666,6 +666,19 @@ body.home-page {
   text-transform: uppercase;
 }
 
+.experience-role a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--faint);
+  text-underline-offset: 3px;
+  transition: color 160ms ease, text-decoration-color 160ms ease;
+}
+
+.experience-role a:hover {
+  color: var(--periwinkle);
+  text-decoration-color: var(--periwinkle);
+}
+
 .experience-description {
   max-width: 65ch;
   color: var(--muted);
