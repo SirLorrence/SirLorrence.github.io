@@ -1,5 +1,5 @@
 <div class="ascii-field">
-  <canvas id="ascii-hero" class="ascii-canvas ascii-field__canvas" role="img" aria-label="A floating ASCII toy engineer wearing round glasses, with a cat on its head, a sage laptop, and a steaming coffee cup beside it, suspended in a gently twinkling starfield.">Laurence's floating toy engineer, cat, laptop, and coffee rendered as an ASCII starfield.</canvas>
+  <canvas id="ascii-hero" class="ascii-canvas ascii-field__canvas" role="img" aria-label="A tired, floating ASCII Smiski-inspired figure with half-lidded eyes, a sage laptop, and a steaming handled coffee mug beside it, suspended in a gently twinkling starfield.">Laurence's tired floating Smiski-inspired figure, laptop, and coffee mug rendered as an ASCII starfield.</canvas>
   <template id="ascii-mascot-source">{{- partial "mascot.html" . -}}</template>
 </div>
 <button class="field-toggle" id="field-toggle" type="button" aria-controls="ascii-hero" aria-pressed="false">Pause field</button>
@@ -12,7 +12,7 @@
   const FIELD_COLOR = "#9aa6e8";
   const HIGHLIGHT_COLOR = "#e2622a";
   const MONO_STACK = '"Geist Mono", ui-monospace, SFMono-Regular, Consolas, monospace';
-  const FIGURE_COLUMNS = 60;
+  const FIGURE_COLUMNS = 76;
   const FIGURE_FLOOR = 0.30;
   const SVG_WIDTH = 420;
   const SVG_HEIGHT = 520;
@@ -176,19 +176,22 @@
         const green = pixels[pixel + 1] / 255;
         const blue = pixels[pixel + 2] / 255;
         const rgbLuminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue;
+        const detail = Math.pow(rgbLuminance, 1.55);
+        const coverage = alpha >= 0.60 ? 1 : 0.35;
 
         // Channel one identifies the silhouette; channel two adds density upward
-        // from its floor. No feature can become a hole darker than the silhouette.
+        // from its floor. Flat source tones and quantized edge coverage keep the
+        // figure crisp instead of surrounding it with faint antialiasing noise.
         alphaChannel[index] = alpha;
-        luminanceChannel[index] = FIGURE_FLOOR + (1 - FIGURE_FLOOR) * rgbLuminance;
+        luminanceChannel[index] = FIGURE_FLOOR + (1 - FIGURE_FLOOR) * detail * coverage;
       }
       figure = { columns: FIGURE_COLUMNS, rows: figureRows, alphaChannel, luminanceChannel };
     }
 
     function compositeFigure(buffer, bob) {
       if (!figure) return;
-      const originX = Math.max(1, columns - figure.columns - Math.round(columns * 0.07));
-      const preferredY = columns === 150 ? Math.round(rows * 0.13) : rows - figure.rows - 3;
+      const originX = Math.round((columns - figure.columns) / 2);
+      const preferredY = Math.round((rows - figure.rows) / 2);
       const originY = clamp(preferredY + bob, 1, Math.max(1, rows - figure.rows - 1));
 
       for (let y = 0; y < figure.rows; y += 1) {
@@ -210,8 +213,8 @@
         for (let segment = 0; segment < 7; segment += 1) {
           const progress = phase + segment * 0.025;
           if (progress >= 1) continue;
-          const sourceX = 339 + wisp * 18 + Math.sin(progress * 7 + wisp) * 6;
-          const sourceY = 264 - progress * 62;
+          const sourceX = 329 + wisp * 18 + Math.sin(progress * 7 + wisp) * 6;
+          const sourceY = 270 - progress * 68;
           const x = originX + Math.floor(sourceX / SVG_WIDTH * figure.columns);
           const y = originY + Math.floor(sourceY / SVG_HEIGHT * figure.rows);
           if (x < 0 || x >= columns || y < 0 || y >= rows) continue;
@@ -403,7 +406,7 @@
     };
     if ("ResizeObserver" in window) {
       const observer = new ResizeObserver(rebuild);
-      document.querySelectorAll(".home-hero, .project-card__visual").forEach(element => observer.observe(element));
+      document.querySelectorAll(".ascii-field, .project-card__visual").forEach(element => observer.observe(element));
     } else {
       window.addEventListener("resize", rebuild, { passive: true });
     }

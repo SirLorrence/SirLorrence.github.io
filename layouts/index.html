@@ -10,7 +10,6 @@
 
   <main id="main-content">
     <section class="home-hero" aria-labelledby="hero-title">
-      {{- partial "ascii-field.html" . }}
       <div class="home-hero__content">
         <p class="micro-label home-hero__status">
           <span class="status-dot" aria-hidden="true"></span>
@@ -23,7 +22,16 @@
           <a class="text-link text-link--quiet" href="{{ "/about/" | relURL }}">More about me</a>
         </div>
       </div>
-      <p class="micro-label home-hero__field-note" aria-hidden="true">Figure + field / one luminance ramp</p>
+      <div class="home-hero__panel">
+        <div class="micro-label home-hero__panel-head" aria-hidden="true">
+          <span>Character field / 001</span>
+          <span>Canvas / Live</span>
+        </div>
+        {{- partial "ascii-field.html" . }}
+        <div class="home-hero__panel-foot">
+          <p class="micro-label home-hero__field-note" aria-hidden="true">Figure + field / one luminance ramp</p>
+        </div>
+      </div>
     </section>
 
     <section class="home-section home-shell" id="work" aria-labelledby="work-title">
