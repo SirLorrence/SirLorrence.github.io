@@ -1,7 +1,5 @@
 {{- $homeURL := site.Home.RelPermalink -}}
-{{- $projectsURL := "/projects/" | relURL -}}
 {{- $postsURL := "/posts/" | relURL -}}
-{{- $aboutURL := "/about/" | relURL -}}
 <header class="home-header">
   <nav class="home-nav" aria-label="Primary navigation">
     <a class="home-brand" href="{{ $homeURL }}" aria-label="Laurence Sadler, home">
@@ -10,17 +8,14 @@
     </a>
 
     <div class="home-nav__sections">
-      <a href="{{ if .IsHome }}#work{{ else }}{{ $homeURL }}#work{{ end }}"><span>01</span> Projects</a>
+      <a href="{{ if .IsHome }}#work{{ else }}{{ $homeURL }}#work{{ end }}"{{ if eq .Section "projects" }} class="is-active" aria-current="true"{{ end }}><span>01</span> Projects</a>
       <a href="{{ if .IsHome }}#experience{{ else }}{{ $homeURL }}#experience{{ end }}"><span>02</span> Experience</a>
       <a href="{{ if .IsHome }}#about{{ else }}{{ $homeURL }}#about{{ end }}"><span>03</span> About</a>
       <a href="{{ if .IsHome }}#contact{{ else }}{{ $homeURL }}#contact{{ end }}"><span>04</span> Contact</a>
     </div>
 
     <div class="home-nav__pages">
-      <a href="{{ $projectsURL }}"{{ if eq .Section "projects" }} class="is-active" aria-current="page"{{ end }}>Projects</a>
-      <a href="{{ $postsURL }}"{{ if eq .Section "posts" }} class="is-active" aria-current="page"{{ end }}>Blogs</a>
-      <a href="{{ $aboutURL }}"{{ if eq .RelPermalink $aboutURL }} class="is-active" aria-current="page"{{ end }}>About</a>
-      <a href="{{ "/laurence_sadler-cv.pdf" | relURL }}">CV</a>
+      <a href="{{ $postsURL }}"{{ if eq .Section "posts" }} class="is-active" aria-current="page"{{ end }}>Blog</a>
     </div>
   </nav>
 </header>

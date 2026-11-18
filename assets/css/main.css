@@ -362,6 +362,86 @@ body.home-page {
   color: var(--muted);
 }
 
+.action-primary,
+.action-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 48px;
+  padding: 0 18px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  transition: color 160ms ease, background-color 160ms ease, border-color 160ms ease;
+}
+
+.action-primary,
+.home-page a.action-primary {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--ground);
+}
+
+.action-primary:hover,
+.home-page a.action-primary:hover {
+  background: var(--periwinkle);
+  border-color: var(--periwinkle);
+  color: var(--ground);
+}
+
+.action-secondary,
+.home-page a.action-secondary {
+  background: transparent;
+  border-color: var(--hairline);
+  color: var(--text);
+}
+
+.action-secondary:hover {
+  border-color: var(--periwinkle);
+  color: var(--periwinkle);
+}
+
+.action-primary span,
+.action-secondary span {
+  font-size: 14px;
+  line-height: 1;
+}
+
+.contact-resume {
+  display: flex;
+  max-width: 560px;
+  min-height: 64px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-top: 34px;
+  padding: 14px 16px;
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: "Geist Mono", ui-monospace, monospace;
+  font-size: 11px;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.contact-resume:hover {
+  border-color: var(--periwinkle);
+  color: var(--periwinkle);
+}
+
+.contact-resume > span:last-child {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
 .field-toggle {
   position: absolute;
   z-index: 2;
@@ -1404,7 +1484,7 @@ body:not(.home-page) .page-header h1,
 
   .home-nav__pages {
     grid-column: 1 / -1;
-    justify-self: start;
+    justify-self: end;
     margin-top: -4px;
   }
 
@@ -1562,14 +1642,20 @@ body:not(.home-page) .page-header h1,
 }
 
 @media (max-width: 560px) {
+  .home-brand {
+    width: auto;
+  }
+
   .home-nav__sections {
     width: 100%;
+    order: 3;
     justify-content: space-between;
   }
 
   .home-nav__pages {
-    width: 100%;
-    justify-content: space-between;
+    width: auto;
+    order: 2;
+    justify-content: flex-end;
   }
 
   .about-principle {
@@ -1606,7 +1692,14 @@ body:not(.home-page) .page-header h1,
   .home-hero__actions {
     flex-direction: column;
     align-items: flex-start;
-    gap: 4px;
+    gap: 10px;
+  }
+
+  .contact-resume {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 28px;
   }
 
   .field-toggle {
