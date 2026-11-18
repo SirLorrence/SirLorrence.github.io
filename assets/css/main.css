@@ -743,8 +743,8 @@ body.home-page {
 
 .experience-toolkit__groups {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 26px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px 32px;
 }
 
 .experience-toolkit__groups h4 {
