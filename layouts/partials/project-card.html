@@ -4,9 +4,9 @@ Optional project front matter (neither field is required):
   ascii_scene: "rings"  # fallback motif only: rings | sphere | grid
   wide: true            # span both home-page grid columns; defaults to false
 
-The project's existing cover.image is rendered through the shared ASCII ramp.
-ascii_scene is used only when a project has no cover, or the image cannot be
-sampled. Existing title, summary, and weight values are used when present.
+The project's existing cover.image is shown directly. ascii_scene is only used
+as a fallback motif when a project has no cover. Existing title, summary, and
+weight values are used when present.
 */}}
 {{- $page := .page -}}
 {{- $title := default $page.File.BaseFileName $page.Title -}}
@@ -31,12 +31,16 @@ sampled. Existing title, summary, and weight values are used when present.
 <article class="project-card{{ if $wide }} project-card--wide{{ end }}">
   <a class="project-card__link" href="{{ $page.RelPermalink }}" aria-label="View project: {{ $title }}">
     <div class="project-card__visual" aria-hidden="true">
-      <canvas class="ascii-canvas project-card__canvas" data-ascii-image="{{ $coverURL }}" data-ascii-scene="{{ $scene }}" aria-hidden="true"></canvas>
+      {{- if $coverURL }}
+      <img class="project-card__cover" src="{{ $coverURL }}" alt="" loading="lazy" decoding="async">
+      {{- else }}
+      <canvas class="ascii-canvas project-card__canvas" data-ascii-scene="{{ $scene }}" aria-hidden="true"></canvas>
+      {{- end }}
     </div>
     <div class="project-card__body">
       <div class="project-card__meta micro-label">
         <span>Project / {{ printf "%02d" (add .index 1) }}</span>
-        <span>{{ if $cover }}Cover / ASCII{{ else }}{{ $scene | title }}{{ end }}</span>
+        <span>{{ if $cover }}Project cover{{ else }}{{ $scene | title }}{{ end }}</span>
       </div>
       {{- if eq $heading "h2" }}<h2>{{ $title }}</h2>{{ else }}<h3>{{ $title }}</h3>{{ end }}
       {{- with $summary }}<p>{{ . }}</p>{{ end }}

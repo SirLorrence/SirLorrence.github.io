@@ -3,10 +3,12 @@
   "use strict";
 
   const RAMP = " .,:;o*@";
-  const FIELD_COLOR = "#14131A";
+  const FIELD_COLOR = "#C1272D";
+  const FIGURE_COLOR = "#14131A";
+  const GALAXY_SPIN = 0.018;
   const HIGHLIGHT_COLOR = "#C1272D";
   const MONO_STACK = '"Geist Mono", ui-monospace, SFMono-Regular, Consolas, monospace';
-  const FIGURE_COLUMNS = 76;
+  const FIGURE_COLUMNS = 68;
   const FIGURE_FLOOR = 0.30;
   const SVG_WIDTH = 420;
   const SVG_HEIGHT = 520;
@@ -65,12 +67,25 @@
 
   // The hero and all project thumbnails share this exact ramp and paint pass.
   function paint(ctx, buffer, metrics, options = {}) {
-    const { colors = null, accent = true } = options;
+    const { colors = null, accent = true, hole = null } = options;
     const { columns, rows, cellWidth, cellHeight, fontSize, width, height, offsetX, offsetY } = metrics;
     ctx.clearRect(0, 0, width, height);
     ctx.font = `450 ${fontSize}px ${MONO_STACK}`;
     ctx.textAlign = "left";
     ctx.textBaseline = "top";
+
+    if (hole) {
+      ctx.beginPath();
+      ctx.ellipse(
+        offsetX + hole.column * cellWidth,
+        offsetY + hole.row * cellHeight,
+        hole.radiusX * cellWidth,
+        hole.radiusY * cellHeight,
+        0, 0, Math.PI * 2
+      );
+      ctx.fillStyle = "#000000";
+      ctx.fill();
+    }
 
     if (colors) {
       // Group adjacent cells with the same quantized colour into one draw call.
@@ -132,20 +147,64 @@
 
   function makeStars(columns, rows) {
     const random = seededRandom(41027);
-    return Array.from({ length: 150 }, () => ({
-      x: random() * columns,
-      y: random() * rows,
-      luminance: 0.10 + random() * 0.30,
-      phase: random() * Math.PI * 2,
-      drift: 0.035 + random() * 0.035
-    }));
+    const stars = [];
+    const centerX = columns * 0.36;
+    const centerY = rows * 0.50;
+    const radiusX = columns * 0.48;
+    const radiusY = rows * 0.47;
+
+    // Two-arm spiral. The radius starts outside a central void, leaving the
+    // ink panel visible as a black hole at the centre.
+    const armStars = Math.round(columns * rows * 0.13);
+    for (let i = 0; i < armStars; i += 1) {
+      const arm = i % 2;
+      const t = Math.pow(random(), 1.45);
+      const radius = 0.12 + t * 0.88;
+      const angle = arm * Math.PI + t * 6.4 + (random() - 0.5) * 0.36;
+      const jitter = 1 + (random() - 0.5) * 0.055;
+      const core = Math.pow(1 - t, 2.2);
+      const luminance = 0.15 + core * 0.70 + random() * 0.18;
+      stars.push({
+        angle,
+        radiusX: radiusX * radius * jitter,
+        radiusY: radiusY * radius * jitter,
+        centerX,
+        centerY,
+        luminance: random() < 0.055 ? luminance + 0.18 : luminance,
+        phase: random() * Math.PI * 2,
+        spin: GALAXY_SPIN
+      });
+    }
+
+    // Sparse surrounding field, outside the arms.
+    const scatter = Math.round(columns * rows * 0.016);
+    for (let i = 0; i < scatter; i += 1) {
+      stars.push({
+        x: random() * columns,
+        y: random() * rows,
+        luminance: 0.05 + random() * 0.20,
+        phase: random() * Math.PI * 2,
+        drift: 0.020 + random() * 0.025
+      });
+    }
+
+    return stars;
   }
 
   function starBuffer(stars, columns, rows, elapsed) {
     const buffer = new Float32Array(columns * rows);
     for (const star of stars) {
-      const x = Math.floor(star.x) % columns;
-      const y = Math.floor(star.y + elapsed * star.drift) % rows;
+      let x;
+      let y;
+      if (star.angle !== undefined) {
+        const angle = star.angle + elapsed * star.spin;
+        x = Math.floor(star.centerX + Math.cos(angle) * star.radiusX);
+        y = Math.floor(star.centerY + Math.sin(angle) * star.radiusY);
+        if (x < 0 || x >= columns || y < 0 || y >= rows) continue;
+      } else {
+        x = Math.floor(star.x) % columns;
+        y = Math.floor(star.y + elapsed * star.drift) % rows;
+      }
       const twinkle = 0.86 + Math.sin(elapsed * 0.48 + star.phase) * 0.14;
       const index = y * columns + x;
       buffer[index] = Math.max(buffer[index], star.luminance * twinkle);
@@ -217,9 +276,9 @@
       figure = { columns: FIGURE_COLUMNS, rows: figureRows, alphaChannel, luminanceChannel };
     }
 
-    function compositeFigure(buffer, bob) {
+    function compositeFigure(buffer, bob, mask) {
       if (!figure) return;
-      const originX = Math.round((columns - figure.columns) / 2);
+      const originX = Math.max(2, columns - figure.columns - (columns === 150 ? 7 : 4));
       const preferredY = Math.round((rows - figure.rows) / 2);
       const originY = clamp(preferredY + bob, 1, Math.max(1, rows - figure.rows - 1));
 
@@ -231,7 +290,9 @@
           if (targetX < 0 || targetX >= columns) continue;
           const sourceIndex = y * figure.columns + x;
           if (figure.alphaChannel[sourceIndex] > 0.08) {
-            buffer[targetY * columns + targetX] = Math.max(FIGURE_FLOOR, figure.luminanceChannel[sourceIndex]);
+            const targetIndex = targetY * columns + targetX;
+            buffer[targetIndex] = Math.max(FIGURE_FLOOR, figure.luminanceChannel[sourceIndex]);
+            mask[targetIndex] = 1;
           }
         }
       }
@@ -243,7 +304,7 @@
           const progress = phase + segment * 0.025;
           if (progress >= 1) continue;
           const sourceX = 329 + wisp * 18 + Math.sin(progress * 7 + wisp) * 6;
-          const sourceY = 270 - progress * 68;
+          const sourceY = 390 - progress * 68;
           const x = originX + Math.floor(sourceX / SVG_WIDTH * figure.columns);
           const y = originY + Math.floor(sourceY / SVG_HEIGHT * figure.rows);
           if (x < 0 || x >= columns || y < 0 || y >= rows) continue;
@@ -251,6 +312,7 @@
           if (fade > 0.07) {
             const index = y * columns + x;
             buffer[index] = Math.max(buffer[index], FIGURE_FLOOR + fade * 0.58);
+            mask[index] = 1;
           }
         }
       }
@@ -259,9 +321,31 @@
     function draw() {
       if (!ctx || !metrics) return;
       const buffer = starBuffer(stars, columns, rows, elapsed);
-      const bob = Math.round(Math.sin(elapsed * Math.PI * 2 / 7) * 2);
-      compositeFigure(buffer, bob);
-      paint(ctx, buffer, metrics);
+      const bob = 0;
+      const mask = new Uint8Array(columns * rows);
+      compositeFigure(buffer, bob, mask);
+      const colors = new Uint8ClampedArray(columns * rows * 3);
+      for (let index = 0; index < mask.length; index += 1) {
+        const pixel = index * 3;
+        if (mask[index]) {
+          colors[pixel] = 20;
+          colors[pixel + 1] = 19;
+          colors[pixel + 2] = 26;
+        } else {
+          colors[pixel] = 193;
+          colors[pixel + 1] = 39;
+          colors[pixel + 2] = 45;
+        }
+      }
+      paint(ctx, buffer, metrics, {
+        colors,
+        hole: {
+          column: columns * 0.36,
+          row: rows * 0.50,
+          radiusX: columns * 0.48 * 0.115,
+          radiusY: rows * 0.47 * 0.115
+        }
+      });
     }
 
     function rebuild() {
@@ -476,7 +560,7 @@
       const bounds = canvas.getBoundingClientRect();
       if (bounds.width < 1 || bounds.height < 1) return;
       ctx = sizeCanvas(canvas, bounds.width, bounds.height);
-      const unit = measureMono(ctx, 10);
+      const unit = measureMono(ctx, 8);
       const columns = Math.max(28, Math.floor(bounds.width / unit.cellWidth));
       const rows = Math.max(12, Math.floor(bounds.height / unit.cellHeight));
       metrics = fitGrid(ctx, bounds.width, bounds.height, columns, rows);
