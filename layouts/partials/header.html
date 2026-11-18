@@ -12,10 +12,7 @@
       <a href="{{ if .IsHome }}#experience{{ else }}{{ $homeURL }}#experience{{ end }}"><span>02</span> Experience</a>
       <a href="{{ if .IsHome }}#about{{ else }}{{ $homeURL }}#about{{ end }}"><span>03</span> About</a>
       <a href="{{ if .IsHome }}#contact{{ else }}{{ $homeURL }}#contact{{ end }}"><span>04</span> Contact</a>
-    </div>
-
-    <div class="home-nav__pages">
-      <a href="{{ $postsURL }}"{{ if eq .Section "posts" }} class="is-active" aria-current="page"{{ end }}>Blog</a>
+      <a class="home-nav__blog{{ if eq .Section "posts" }} is-active{{ end }}" href="{{ $postsURL }}"{{ if eq .Section "posts" }} aria-current="page"{{ end }}>Blog</a>
     </div>
   </nav>
 </header>
