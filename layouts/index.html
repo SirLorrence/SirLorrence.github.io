@@ -113,36 +113,42 @@
     </section>
 
     <section class="home-section home-shell home-about" id="about" aria-labelledby="about-title">
-      <header class="section-heading">
-        <p class="micro-label">03 / A little about me</p>
-        <h2 id="about-title">About</h2>
-      </header>
-
       <div class="about-layout">
         <div class="about-intro">
-          <p class="about-statement">A game developer's curiosity, an engineer's habits.</p>
-          <p>I'm a software engineer based in California, currently working in software QA. I'm passionate about video games, game development, LLMs, and the programming and graphics techniques that make them work.</p>
+          <p class="micro-label about-kicker">03 / A little about me</p>
+          <figure class="about-portrait">
+            <img src="{{ "/images/Me.jpg" | relURL }}" alt="Laurence Sadler" width="1260" height="1260" loading="lazy" decoding="async">
+          </figure>
+          <h2 id="about-title" class="about-statement">Software Boi <span class="about-kaomoji" aria-hidden="true">(¬_¬)</span></h2>
+          <p class="about-bio">I'm a software engineer based in California, currently working in software QA. I'm passionate about video games, game development, LLMs, and the programming and graphics techniques that make them work.</p>
         </div>
-        <div class="about-principles">
-          <article class="about-principle">
-            <span class="about-principle__number" aria-hidden="true">01</span>
+        <div class="about-details">
+          <article class="about-detail">
+            <p class="micro-label">01 / Tools</p>
             <div>
-              <h3>Curiosity as a method</h3>
-              <p>I like learning how systems work beneath the surface, whether that's a renderer, an AI query system, or a new engine.</p>
+              <h3>What I use</h3>
+              <ul class="about-detail__list">
+                <li>Zed</li>
+                <li>Claude Code</li>
+                <li>JetBrains Rider</li>
+                <li>Unity</li>
+                <li>Unreal Engine</li>
+                <li>Git</li>
+              </ul>
             </div>
           </article>
-          <article class="about-principle">
-            <span class="about-principle__number" aria-hidden="true">02</span>
+          <article class="about-detail">
+            <p class="micro-label">02 / Interests</p>
             <div>
-              <h3>Build to understand</h3>
-              <p>Personal projects are where I test ideas: enemy positioning AI, ray tracing, and fast game-jam experiments.</p>
-            </div>
-          </article>
-          <article class="about-principle">
-            <span class="about-principle__number" aria-hidden="true">03</span>
-            <div>
-              <h3>Care for the edges</h3>
-              <p>From game jams to QA, I care about clear communication, finding edge cases, and leaving the work easier to pick up.</p>
+              <h3>Off the clock</h3>
+              <ul class="about-detail__list">
+                <li>Video games</li>
+                <li>Food &amp; cooking</li>
+                <li>Photography</li>
+                <li>Movies</li>
+                <li>Old anime</li>
+                <li>French</li>
+              </ul>
             </div>
           </article>
         </div>
