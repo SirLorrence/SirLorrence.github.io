@@ -1,7 +1,7 @@
 ---
 title: "Software Ray Tracer"
-summary: "Project using C++ to understand the working of Raytracing."
-tags: ["C++","Graphics"]
+summary: "A C++ renderer built from scratch to understand per-pixel cost and where the time goes: ray casting, intersection math, and shading."
+tags: ["C++","Graphics","Performance"]
 ShowToc: true
 weight: 1
 cover:

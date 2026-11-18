@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="{{ .Lang | default "en-us" }}" dir="{{ .Language.LanguageDirection | default "ltr" }}">
+<head>
+  {{- partial "head.html" . }}
+</head>
+<body class="home-page" id="top">
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  {{ partial "header.html" . }}
+
+  <main id="main-content">
+    <section class="home-hero" aria-labelledby="hero-title">
+      <div class="home-hero__content">
+        <p class="micro-label home-hero__status">
+          <span class="status-dot" aria-hidden="true"></span>
+          Software engineer
+        </p>
+        <h1 id="hero-title">Laurence<br>Sadler<span class="hero-period">.</span></h1>
+        <p class="home-hero__intro">{{ site.Params.homeInfoParams.Content | default "I'm a software engineer. I build systems and tools, and I like making them easier to understand and faster to run." }}</p>
+        <div class="home-hero__actions">
+          <a class="action-primary" href="#work">Explore my work <span aria-hidden="true">↗</span></a>
+          <a class="action-secondary" href="{{ "/laurence_sadler-cv.pdf" | relURL }}" download>Download resume <span aria-hidden="true">↓</span></a>
+        </div>
+      </div>
+      <div class="home-hero__visual">
+        <img class="home-hero__image"
+          src="{{ "/images/spiral-field-paper.png" | relURL }}"
+          alt="A spiral galaxy of ink particles around a black central hole."
+          width="804" height="414" loading="eager" decoding="async">
+      </div>
+    </section>
+
+    <section class="home-section home-shell" id="work" aria-labelledby="work-title">
+      <header class="section-heading">
+        <p class="micro-label">01 / Selected projects</p>
+        <h2 id="work-title">Selected projects</h2>
+        <p>Systems and tools I've built to learn how they work.</p>
+      </header>
+
+      {{- $projects := where site.RegularPages "Section" "projects" -}}
+      {{- $projects = $projects.ByWeight -}}
+      {{- $gridProjects := slice -}}
+      {{- $asideProjects := slice -}}
+      {{- range $projects -}}
+        {{- if ne .Params.grid false -}}{{- $gridProjects = $gridProjects | append . -}}{{- else -}}{{- $asideProjects = $asideProjects | append . -}}{{- end -}}
+      {{- end -}}
+      <div class="project-grid">
+        {{- range $index, $project := $gridProjects -}}
+          {{- partial "project-card.html" (dict "page" $project "index" $index) -}}
+        {{- end -}}
+      </div>
+      <div class="project-footer">
+        {{- range $asideProjects }}
+        <p class="project-aside micro-label">Also: <a href="{{ .RelPermalink }}">small projects and game jams <span aria-hidden="true">↗</span></a></p>
+        {{- end }}
+        <a class="text-link" href="{{ "/projects/" | relURL }}">Browse the project index</a>
+      </div>
+    </section>
+
+    <section class="home-section home-shell home-experience" id="experience" aria-labelledby="experience-title">
+      <header class="section-heading">
+        <p class="micro-label">02 / Background</p>
+        <h2 id="experience-title">Experience</h2>
+        <p>Software engineer working across validation, test automation, and systems programming.</p>
+      </header>
+
+      <div class="experience-list">
+        <article>
+          <p class="experience-date"><span>Dec 2025</span><span>— Present</span></p>
+          <div class="experience-meta">
+            <h3>Software Quality Assurance</h3>
+            <p class="experience-role"><a href="https://zeromatter.com/" target="_blank" rel="noopener noreferrer">Zeromatter</a> · Mountain View, CA</p>
+          </div>
+          <p class="experience-description">Zeromatter builds simulation tools that let engineers test designs in virtual worlds before they build them. I work on QA across that stack, covering validation, test automation, and debugging for physics and AI-driven simulation.</p>
+        </article>
+        <article>
+          <p class="experience-date"><span>Jul 2021</span><span>— Nov 2025</span></p>
+          <div class="experience-meta">
+            <h3>Validation Engineer</h3>
+            <p class="experience-role"><a href="https://www.ust.com/" target="_blank" rel="noopener noreferrer">UST Global</a> · Contracted to <a href="https://intel.com/" target="_blank" rel="noopener noreferrer">Intel</a> · Folsom, CA</p>
+          </div>
+          <p class="experience-description">Built and maintained Python and batch automation for AI testing across OpenVINO, Llama, and MiniCPM. Designed and executed test cases for 3D/CAD software including Unreal Engine, Adobe, SPECview/APC, and the Xe suite, and worked with engineers to reproduce and debug driver issues.</p>
+        </article>
+        <article>
+          <p class="experience-date"><span>May 2021</span><span>— Mar 2022</span></p>
+          <div class="experience-meta">
+            <h3>Game Programmer</h3>
+            <p class="experience-role">Vigilance Mobile · Nova Scotia, Remote</p>
+          </div>
+          <p class="experience-description">Implemented core gameplay mechanics in C#, including movement, collectables, and power-ups. Managed source control and code reviews through GitHub, and contributed to project documentation and planning.</p>
+        </article>
+      </div>
+
+      <div class="experience-toolkit">
+        <h3>Everyday toolkit</h3>
+        <div class="experience-toolkit__groups">
+          <div>
+            <h4>Languages</h4>
+            <p>C# · C++ · Python · Batch</p>
+          </div>
+          <div>
+            <h4>AI &amp; tooling</h4>
+            <p>Claude Code · Codex · LiteLLM · Pydantic</p>
+          </div>
+          <div>
+            <h4>Workflow</h4>
+            <p>Linear · Notion · Git · GitHub · CI</p>
+          </div>
+          <div>
+            <h4>Practice</h4>
+            <p>Agile · Scrum · Kanban · Jira · Confluence · Debugging</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="experience-education">
+        <h3>Education</h3>
+        <div>
+          <p class="experience-role">2019 – 2021 · Nova Scotia Community College · Truro, NS</p>
+          <p>Game Programming and Design Degree. Coursework covered C#, Unity, game data structures, design theory, and the game development pipeline.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="home-section home-shell home-about" id="about" aria-labelledby="about-title">
+      <div class="about-layout">
+        <div class="about-intro">
+          <p class="micro-label about-kicker">03 / $ whoami </p>
+          <figure class="about-portrait">
+            <img src="{{ "/images/Me.jpg" | relURL }}" alt="Laurence Sadler" width="1260" height="1260" loading="lazy" decoding="async">
+          </figure>
+          <h2 id="about-title" class="about-statement">Software Boi <span class="about-kaomoji" aria-hidden="true">(¬_¬)</span></h2>
+          <p class="about-bio">I'm a software engineer based in California. I've worked in game development and software validation. These days I'm leaning toward AI engineering and simulation, with robotics as a maybe. I like systems, graphics, and figuring out why one version of a program feels faster than another. (Sometimes, it's just based on vibes.)</p>
+        </div>
+        <div class="about-details">
+          <article class="about-detail">
+            <p class="micro-label">01 / Tools</p>
+            <div>
+              <h3>What I use</h3>
+              <dl class="about-fact-list">
+                <div><dt>At work</dt><dd>Claude Code · Zed</dd></div>
+                <div><dt>At home</dt><dd>Zed · Pi</dd></div>
+                <div><dt>Learning</dt><dd>Vim</dd></div>
+                <div><dt>Also</dt><dd>Git</dd></div>
+              </dl>
+            </div>
+          </article>
+          <article class="about-detail">
+            <p class="micro-label">02 / Interests</p>
+            <div>
+              <h3>Off the clock</h3>
+              <dl class="about-fact-list">
+                <div><dt>Often</dt><dd>Video games · Food &amp; cooking · Photography · Coffee</dd></div>
+                <div><dt>Watching</dt><dd>Movies · Old anime</dd></div>
+                <div><dt>Thinking</dt><dd>Philosophy</dd></div>
+                <div><dt>Language</dt><dd>French</dd></div>
+              </dl>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    {{- $email := "mailto:sirlaurence@protonmail.com" -}}
+    {{- range site.Params.socialIcons -}}
+      {{- if eq .name "email" -}}{{- $email = .url -}}{{- end -}}
+    {{- end -}}
+    <section class="home-section home-shell home-contact" id="contact" aria-labelledby="contact-title">
+      <header class="section-heading">
+        <p class="micro-label">04 / Get in touch</p>
+        <h2 id="contact-title">Contact</h2>
+      </header>
+      <p class="home-contact__prompt">If you want to talk shop or have a project in mind, email is the best place to start.</p>
+      <a class="home-contact__email" href="{{ $email }}">{{ replace $email "mailto:" "" }}</a>
+      <a class="contact-resume" href="{{ "/laurence_sadler-cv.pdf" | relURL }}" download>
+        <span class="micro-label">Resume / PDF</span>
+        <span>Download resume <span aria-hidden="true">↓</span></span>
+      </a>
+      <div class="home-contact__socials">
+        {{- range site.Params.socialIcons -}}
+          {{- if and (ne .name "email") (ne .name "cv") -}}
+            <a href="{{ .url }}"{{ if hasPrefix .url "http" }} target="_blank" rel="noopener noreferrer"{{ end }}>{{ .name | title }}</a>
+          {{- end -}}
+        {{- end -}}
+      </div>
+    </section>
+  </main>
+
+  {{ partial "footer.html" . }}
+</body>
+</html>

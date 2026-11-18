@@ -1,7 +1,7 @@
 ---
 title: "AI Position System Prototype"
-summary: "I developed a flexible enemy positioning AI, using a custom query system."
-tags: ["C#","Unity", "AI", "Prototype"]
+summary: "A configurable scoring pipeline for spatial queries: candidates generated in rings, scored on distance, cover, and angle, then filtered to a single result. The pipeline is general, so I can add another query without changing how the final position is chosen."
+tags: ["C#","Algorithms","Scoring","Unity"]
 ShowToc: true
 weight: 1
 cover:

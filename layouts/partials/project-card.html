@@ -1,0 +1,49 @@
+{{/*
+Optional project front matter:
+
+  grid: false  # omit from the card grid and show as an aside link
+
+The project's existing cover.image is shown directly. Existing title, summary,
+and weight values are used when present.
+*/}}
+{{- $page := .page -}}
+{{- $index := .index -}}
+{{- $title := default $page.File.BaseFileName $page.Title -}}
+{{- $summary := $page.Params.summary | default ($page.Summary | plainify | htmlUnescape) -}}
+{{- $heading := .heading | default "h3" -}}
+{{- $cover := $page.Params.cover.image | default "" -}}
+{{- if $cover -}}
+  {{- $cover = replaceRE `^https://github\.com/([^/]+)/([^/]+)/blob/(.+)$` "https://raw.githubusercontent.com/$1/$2/$3" $cover -}}
+  {{- $cover = replaceRE `\?raw=true$` "" $cover -}}
+{{- end -}}
+{{- $coverURL := "" -}}
+{{- if $cover -}}
+  {{- if hasPrefix $cover "http" -}}
+    {{- $coverURL = $cover -}}
+  {{- else -}}
+    {{- $coverURL = printf "/%s" (strings.TrimPrefix "/" $cover) | relURL -}}
+  {{- end -}}
+{{- end -}}
+<article class="project-card">
+  <a class="project-card__link" href="{{ $page.RelPermalink }}" aria-label="View project: {{ $title }}">
+    {{- with $coverURL }}
+    <div class="project-card__visual" aria-hidden="true">
+      <img class="project-card__cover" src="{{ . }}" alt="" loading="lazy" decoding="async">
+    </div>
+    {{- end }}
+    <div class="project-card__body">
+      <div class="project-card__meta micro-label">
+        <span>Project / {{ printf "%02d" (add $index 1) }}</span>
+        <span>{{ if $cover }}Project cover{{ else }}Project{{ end }}</span>
+      </div>
+      {{- if eq $heading "h2" }}<h2>{{ $title }}</h2>{{ else }}<h3>{{ $title }}</h3>{{ end }}
+      {{- with $summary }}<p>{{ . }}</p>{{ end }}
+      {{- with $page.Params.tags }}
+      <ul class="project-card__tags" aria-label="Project technologies">
+        {{- range . }}<li>{{ . }}</li>{{ end -}}
+      </ul>
+      {{- end }}
+      <span class="project-card__read">View project <span aria-hidden="true">↗</span></span>
+    </div>
+  </a>
+</article>

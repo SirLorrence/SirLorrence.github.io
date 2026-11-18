@@ -4,42 +4,13 @@ title: Laurence Sadler
 theme: "PaperMod"
 #publishDir: docs
 
-menu:
-  main:
-    - identifier: projects
-      name: Projects
-      url: /projects/
-      weight: 10
-
-    - identifier: blogs
-      name: Blogs
-      url: /posts/
-      weight: 20
-
-    - identifier: tags
-      name: Tags
-      url: /tags/
-      weight: 30
-
-    - identifier: cv
-      name: CV
-      url: /laurence_sadler-cv.pdf
-      weight: 30
-
-    - identifier: about
-      name: About
-      url: /about/
-      weight: 40
-
 params:
   ShowBreadCrumbs: true
   ShowPostNavLinks: true
-  images: ["/assets/favicon.ico"]
-  lable:
-    text: "Home"
+  images: ["/images/Me.jpg"]
   homeInfoParams:
     Title: Laurence Sadler
-    Content: Hello! I'm a **Software Engineer** with in QA working in the Bay Area. I enjoy developing gameplay systems and constantly expanding my knowledge in software development.
+    Content: "I'm a software engineer. I build systems and tools, and I like making them easier to understand and faster to run."
   socialIcons: # optional
     - name: "github"
       url: "https://github.com/SirLorrence"
@@ -47,12 +18,12 @@ params:
       url: "https://www.linkedin.com/in/laurencesadler/"
     - name: "email"
       url: "mailto:sirlaurence@protonmail.com"
-    - name: "cv"
-      url: "/laurence_sadler-cv.pdf"
   assets:
     disableHLJS: true
-    favicon: "/assets/favicon.ico"
-    favicon16x16: "/assets/favicon-16x16.png"
-    favicon32x32: "/assets/favicon-32x32.png"
-    apple_touch_icon: "/assets/apple-touch-icon.png"
-    #     safari_pinned_tab: "<link / abs url>"
+    favicon: "/favicon.svg"
+    favicon16x16: "/favicon-16.png"
+    favicon32x32: "/favicon-32.png"
+    apple_touch_icon: "/apple-touch-icon.png"
+    safari_pinned_tab: "/favicon.svg"
+    theme_color: "#EDE9E2"
+    msapplication_TileColor: "#EDE9E2"
