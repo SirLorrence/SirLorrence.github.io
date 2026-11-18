@@ -3,8 +3,8 @@
   "use strict";
 
   const RAMP = " .,:;o*@";
-  const FIELD_COLOR = "#9aa6e8";
-  const HIGHLIGHT_COLOR = "#e2622a";
+  const FIELD_COLOR = "#14131A";
+  const HIGHLIGHT_COLOR = "#C1272D";
   const MONO_STACK = '"Geist Mono", ui-monospace, SFMono-Regular, Consolas, monospace';
   const FIGURE_COLUMNS = 76;
   const FIGURE_FLOOR = 0.30;
@@ -457,11 +457,11 @@
       const greenTone = green * intensity;
       const blueTone = blue * intensity;
       const gray = 0.2126 * redTone + 0.7152 * greenTone + 0.0722 * blueTone;
-      const saturation = 1.85;
+      const saturation = 1.60;
       const mix = 0.07;
-      colors[index * 3] = clamp(gray + (redTone - gray) * saturation, 0, 255) * (1 - mix) + 154 * mix;
-      colors[index * 3 + 1] = clamp(gray + (greenTone - gray) * saturation, 0, 255) * (1 - mix) + 166 * mix;
-      colors[index * 3 + 2] = clamp(gray + (blueTone - gray) * saturation, 0, 255) * (1 - mix) + 232 * mix;
+      colors[index * 3] = clamp(gray + (redTone - gray) * saturation, 0, 255) * (1 - mix) + 61 * mix;
+      colors[index * 3 + 1] = clamp(gray + (greenTone - gray) * saturation, 0, 255) * (1 - mix) + 58 * mix;
+      colors[index * 3 + 2] = clamp(gray + (blueTone - gray) * saturation, 0, 255) * (1 - mix) + 52 * mix;
     }
     return { luminance: buffer, colors };
   }

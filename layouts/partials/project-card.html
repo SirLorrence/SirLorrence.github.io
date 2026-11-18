@@ -14,6 +14,7 @@ sampled. Existing title, summary, and weight values are used when present.
 {{- $scene := $page.Params.ascii_scene | default "grid" -}}
 {{- if not (in (slice "rings" "sphere" "grid") $scene) -}}{{- $scene = "grid" -}}{{- end -}}
 {{- $wide := $page.Params.wide | default false -}}
+{{- $heading := .heading | default "h3" -}}
 {{- $cover := $page.Params.cover.image | default "" -}}
 {{- if $cover -}}
   {{- $cover = replaceRE `^https://github\.com/([^/]+)/([^/]+)/blob/(.+)$` "https://raw.githubusercontent.com/$1/$2/$3" $cover -}}
@@ -37,7 +38,7 @@ sampled. Existing title, summary, and weight values are used when present.
         <span>Project / {{ printf "%02d" (add .index 1) }}</span>
         <span>{{ if $cover }}Cover / ASCII{{ else }}{{ $scene | title }}{{ end }}</span>
       </div>
-      <h3>{{ $title }}</h3>
+      {{- if eq $heading "h2" }}<h2>{{ $title }}</h2>{{ else }}<h3>{{ $title }}</h3>{{ end }}
       {{- with $summary }}<p>{{ . }}</p>{{ end }}
       {{- with $page.Params.tags }}
       <ul class="project-card__tags" aria-label="Project technologies">

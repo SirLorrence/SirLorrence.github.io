@@ -37,10 +37,10 @@
   {{- else }}{{ .Content }}{{ end }}
 </div>
 {{- end }}
-{{- if eq .Section "projects" }}
+{{- if or (eq .Section "projects") (eq .Type "projects") }}
 <div class="project-grid">
   {{- range $index, $page := .Pages.ByWeight }}
-  {{- partial "project-card.html" (dict "page" $page "index" $index) }}
+  {{- partial "project-card.html" (dict "page" $page "index" $index "heading" "h2") }}
   {{- end }}
 </div>
 {{- partial "ascii-scripts.html" . }}
