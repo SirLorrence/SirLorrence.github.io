@@ -48,9 +48,11 @@
   {{- partial "project-card.html" (dict "page" $page "index" $index "heading" "h2") }}
   {{- end }}
 </div>
-{{- range $asideProjects }}
-<p class="project-aside micro-label">Also: <a href="{{ .RelPermalink }}">small projects and game jams <span aria-hidden="true">↗</span></a></p>
-{{- end }}
+<div class="project-footer">
+  {{- range $asideProjects }}
+  <p class="project-aside micro-label">Also: <a href="{{ .RelPermalink }}">small projects and game jams <span aria-hidden="true">↗</span></a></p>
+  {{- end }}
+</div>
 {{- partial "ascii-scripts.html" . }}
 {{- else }}
 {{- $pages := union .RegularPages .Sections }}

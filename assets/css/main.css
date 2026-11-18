@@ -217,7 +217,7 @@ body.home-page {
 .home-hero {
   position: relative;
   display: grid;
-  grid-template-columns: minmax(0, 1.02fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr);
   align-items: center;
   gap: clamp(32px, 5vw, 72px);
   width: min(var(--shell), calc(100% - 64px));
@@ -229,34 +229,8 @@ body.home-page {
   isolation: isolate;
 }
 
-.home-hero__panel {
-  position: relative;
-  display: flex;
+.home-hero__visual {
   min-width: 0;
-  height: auto;
-  flex-direction: column;
-  overflow: hidden;
-  border: 1px solid var(--hairline);
-  border-radius: 8px;
-  background: var(--ground);
-}
-
-.home-hero__panel-head {
-  display: flex;
-  min-height: 56px;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  padding-inline: 20px;
-  border-bottom: 1px solid var(--hairline);
-}
-
-.home-hero__panel-foot {
-  display: flex;
-  min-height: 64px;
-  align-items: center;
-  padding: 0 20px;
-  border-top: 1px solid var(--hairline);
 }
 
 .ascii-field {
@@ -270,10 +244,10 @@ body.home-page {
   overflow: hidden;
 }
 
-.ascii-field__canvas {
+.ascii-field__image {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: auto;
 }
 
 .home-hero__content {
@@ -526,12 +500,23 @@ body.home-page {
   width: 100%;
 }
 
+.project-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 24px;
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--hairline);
+}
+
 .project-aside {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  margin-top: 28px !important;
+  margin: 0 !important;
 }
 
 .project-aside a {
@@ -1072,12 +1057,14 @@ body:not(.home-page) .page-header h1,
 }
 
 .page-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 20px;
 }
 
 .post-entry {
+  width: calc(50% - 10px);
   min-width: 0;
   margin: 0;
   padding: 0;
@@ -1566,8 +1553,8 @@ body:not(.home-page) .page-header h1,
     padding: 32px 20px 72px;
   }
 
-  .page-grid {
-    grid-template-columns: minmax(0, 1fr);
+  .post-entry {
+    width: 100%;
   }
 
   .post-single {
@@ -1605,7 +1592,7 @@ body:not(.home-page) .page-header h1,
 
 @media (max-width: 1160px) {
   .home-hero {
-    min-height: 760px;
+    min-height: 680px;
     gap: 28px;
   }
 
@@ -1729,6 +1716,12 @@ body:not(.home-page) .page-header h1,
     margin-top: 30px;
   }
 
+  .project-footer {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
   .home-footer__inner {
     grid-template-columns: 1fr auto;
     padding-block: 22px;
@@ -1777,14 +1770,6 @@ body:not(.home-page) .page-header h1,
     gap: 40px;
   }
 
-
-  .home-hero__panel-head {
-    padding-inline: 16px;
-  }
-
-  .home-hero__panel-foot {
-    padding-left: 16px;
-  }
 
   .home-hero__field-note {
     display: none;
