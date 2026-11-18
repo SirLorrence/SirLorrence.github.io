@@ -1,20 +1,15 @@
 {{/*
-Optional project front matter (neither field is required):
+Optional project front matter:
 
-  ascii_scene: "rings"  # fallback motif only: rings | sphere | grid
-  wide: true            # span both home-page grid columns; defaults to false
-  grid: false           # omit from the card grid and show as an aside link
+  grid: false  # omit from the card grid and show as an aside link
 
-The project's existing cover.image is shown directly. ascii_scene is only used
-as a fallback motif when a project has no cover. Existing title, summary, and
-weight values are used when present.
+The project's existing cover.image is shown directly. Existing title, summary,
+and weight values are used when present.
 */}}
 {{- $page := .page -}}
+{{- $index := .index -}}
 {{- $title := default $page.File.BaseFileName $page.Title -}}
 {{- $summary := $page.Params.summary | default ($page.Summary | plainify | htmlUnescape) -}}
-{{- $scene := $page.Params.ascii_scene | default "grid" -}}
-{{- if not (in (slice "rings" "sphere" "grid") $scene) -}}{{- $scene = "grid" -}}{{- end -}}
-{{- $wide := $page.Params.wide | default false -}}
 {{- $heading := .heading | default "h3" -}}
 {{- $cover := $page.Params.cover.image | default "" -}}
 {{- if $cover -}}
@@ -29,19 +24,17 @@ weight values are used when present.
     {{- $coverURL = printf "/%s" (strings.TrimPrefix "/" $cover) | relURL -}}
   {{- end -}}
 {{- end -}}
-<article class="project-card{{ if $wide }} project-card--wide{{ end }}">
+<article class="project-card">
   <a class="project-card__link" href="{{ $page.RelPermalink }}" aria-label="View project: {{ $title }}">
+    {{- with $coverURL }}
     <div class="project-card__visual" aria-hidden="true">
-      {{- if $coverURL }}
-      <img class="project-card__cover" src="{{ $coverURL }}" alt="" loading="lazy" decoding="async">
-      {{- else }}
-      <canvas class="ascii-canvas project-card__canvas" data-ascii-scene="{{ $scene }}" aria-hidden="true"></canvas>
-      {{- end }}
+      <img class="project-card__cover" src="{{ . }}" alt="" loading="lazy" decoding="async">
     </div>
+    {{- end }}
     <div class="project-card__body">
       <div class="project-card__meta micro-label">
-        <span>Project / {{ printf "%02d" (add .index 1) }}</span>
-        <span>{{ if $cover }}Project cover{{ else }}{{ $scene | title }}{{ end }}</span>
+        <span>Project / {{ printf "%02d" (add $index 1) }}</span>
+        <span>{{ if $cover }}Project cover{{ else }}Project{{ end }}</span>
       </div>
       {{- if eq $heading "h2" }}<h2>{{ $title }}</h2>{{ else }}<h3>{{ $title }}</h3>{{ end }}
       {{- with $summary }}<p>{{ . }}</p>{{ end }}

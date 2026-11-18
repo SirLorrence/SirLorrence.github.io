@@ -233,18 +233,7 @@ body.home-page {
   min-width: 0;
 }
 
-.ascii-field {
-  position: relative;
-  z-index: 0;
-  display: flex;
-  flex: 1;
-  min-height: 0;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-}
-
-.ascii-field__image {
+.home-hero__image {
   display: block;
   width: 100%;
   height: auto;
@@ -333,10 +322,6 @@ body.home-page {
   transform: scaleX(1);
 }
 
-.text-link--quiet {
-  color: var(--muted);
-}
-
 .action-primary,
 .action-secondary {
   display: inline-flex;
@@ -417,37 +402,6 @@ body.home-page {
   white-space: nowrap;
 }
 
-.field-toggle {
-  position: absolute;
-  z-index: 2;
-  right: 20px;
-  bottom: 10px;
-  min-width: 44px;
-  min-height: 44px;
-  padding: 0;
-  border: 0;
-  background: transparent;
-  color: var(--muted);
-  cursor: pointer;
-  font-family: "Geist Mono", ui-monospace, monospace;
-  font-size: 12px;
-  letter-spacing: .10em;
-  text-transform: uppercase;
-}
-
-.field-toggle:hover {
-  color: var(--ink);
-}
-
-.field-toggle[hidden] {
-  display: none;
-}
-
-.home-hero__field-note {
-  position: static;
-  pointer-events: none;
-}
-
 .home-section {
   padding-block: 112px;
   border-bottom: 1px solid var(--hairline);
@@ -494,10 +448,6 @@ body.home-page {
   border-radius: 8px;
   background: var(--ground);
   transition: border-color 180ms ease;
-}
-
-.project-card--wide {
-  width: 100%;
 }
 
 .project-footer {
@@ -553,14 +503,10 @@ body.home-page {
   background: var(--ground);
 }
 
-.project-card__cover,
-.project-card__canvas {
+.project-card__cover {
   display: block;
   width: 100%;
   height: 100%;
-}
-
-.project-card__cover {
   object-fit: cover;
 }
 
@@ -635,10 +581,6 @@ body.home-page {
 .project-card__read span {
   margin-left: 8px;
   color: var(--accent);
-}
-
-.section-link {
-  margin-top: 28px;
 }
 
 .experience-list {
@@ -845,16 +787,6 @@ body.home-page {
   line-height: 1.25;
 }
 
-.about-detail__list {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 0;
-  margin: 0;
-  padding: 0;
-  color: var(--body);
-  list-style: none;
-}
-
 .about-fact-list {
   display: grid;
   gap: 10px;
@@ -879,17 +811,6 @@ body.home-page {
 .about-fact-list dd {
   margin: 0;
   color: var(--body);
-}
-
-.about-detail__list li {
-  display: inline-flex;
-  align-items: center;
-}
-
-.about-detail__list li:not(:last-child)::after {
-  margin: 0 11px;
-  color: var(--faint);
-  content: "/";
 }
 
 .home-contact {
@@ -1497,28 +1418,6 @@ body:not(.home-page) .page-header h1,
   color: var(--faint);
 }
 
-.profile-pic {
-  justify-content: flex-start;
-  border-radius: 8px;
-}
-
-.profile-pic img {
-  border: 1px solid var(--hairline);
-  border-radius: 8px;
-}
-
-.columns-container {
-  gap: 16px;
-  margin: 0;
-}
-
-.column {
-  min-width: 250px;
-  padding: 16px;
-  border: 1px solid var(--hairline);
-  border-radius: 8px;
-}
-
 .archive-entry {
   border-bottom: 1px solid var(--hairline);
 }
@@ -1532,14 +1431,6 @@ body:not(.home-page) .page-header h1,
 .archive-meta,
 .archive-count {
   color: var(--faint);
-  font-family: "Geist Mono", ui-monospace, monospace;
-}
-
-.search-input input {
-  border: 1px solid var(--hairline);
-  border-radius: 6px;
-  background: var(--ground);
-  color: var(--ink);
   font-family: "Geist Mono", ui-monospace, monospace;
 }
 
@@ -1580,14 +1471,6 @@ body:not(.home-page) .page-header h1,
     font-size: 27px;
   }
 
-  .columns-container {
-    display: block;
-  }
-
-  .column {
-    min-width: 0;
-    margin-bottom: 16px;
-  }
 }
 
 @media (max-width: 1160px) {
@@ -1644,10 +1527,6 @@ body:not(.home-page) .page-header h1,
 
   .home-hero__intro {
     max-width: 470px;
-  }
-
-  .home-hero__field-note {
-    display: none;
   }
 
   .home-section {
@@ -1771,10 +1650,6 @@ body:not(.home-page) .page-header h1,
   }
 
 
-  .home-hero__field-note {
-    display: none;
-  }
-
   .home-hero h1 {
     margin-bottom: 24px;
   }
@@ -1790,10 +1665,6 @@ body:not(.home-page) .page-header h1,
     flex-direction: column;
     gap: 8px;
     margin-top: 28px;
-  }
-
-  .field-toggle {
-    bottom: 10px;
   }
 
   .project-card__visual {
@@ -1834,10 +1705,7 @@ body:not(.home-page) .page-header h1,
     color: #111 !important;
   }
 
-  .ascii-field,
-  .ascii-canvas,
-  .field-toggle,
-  .home-hero__field-note,
+  .home-hero__visual,
   .home-nav__sections,
   .home-footer__top {
     display: none !important;
@@ -1882,7 +1750,6 @@ body:not(.home-page) .page-header h1,
   .experience-toolkit__groups p,
   .experience-education p:last-child,
   .about-bio,
-  .about-detail__list,
   .home-contact__prompt {
     color: #333 !important;
   }

@@ -1,4 +1,5 @@
 {{- $stylesheet := resources.Get "css/main.css" | resources.Minify | fingerprint -}}
+<link rel="manifest" href="{{ "site.webmanifest" | relURL }}">
 <link rel="preload" href="{{ "fonts/geist-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="{{ "fonts/geist-mono-latin.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{ $stylesheet.RelPermalink }}" integrity="{{ $stylesheet.Data.Integrity }}" crossorigin="anonymous">
