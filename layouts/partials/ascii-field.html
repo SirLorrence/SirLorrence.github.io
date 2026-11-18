@@ -1,7 +1,129 @@
 <div class="ascii-field">
-  <canvas id="ascii-hero" class="ascii-canvas ascii-field__canvas" role="img" aria-label="A tired, ink-drawn Smiski-inspired figure with half-lidded eyes, a sage laptop, and a steaming handled coffee mug, in front of a slowly rotating red spiral galaxy surrounding a black hole.">Laurence's tired Smiski-inspired figure, laptop, and coffee mug in front of a red ASCII spiral galaxy with a black hole.</canvas>
-  <template id="ascii-mascot-source">{{- partial "mascot.html" . -}}</template>
+  <canvas class="ascii-field__canvas" data-ascii role="img"
+    aria-label="A ringed disc rendered in ASCII characters: a solid dark core inside six concentric bands of glyphs."></canvas>
 </div>
-<button class="field-toggle" id="field-toggle" type="button" aria-controls="ascii-hero" aria-pressed="false">Pause field</button>
 
-{{ partial "ascii-scripts.html" . }}
+<script>
+(function () {
+  document.querySelectorAll('[data-ascii]').forEach(function (el) {
+    var ctx = el.getContext('2d');
+    var DPR = Math.min(window.devicePixelRatio || 1, 2);
+
+    var PAPER = '#ede9e2', INK = '#14131a', RED = '#c1272d';
+    var RAMP = ' .,:;o*@';
+
+    var W = 0, H = 0, cols = 0, rows = 0, cellW = 0, cellH = 0, FONT = 0;
+    var CORE_R = 0, RMAX = 0, CT = 1, ST = 0;
+    var SQUASH = 0.48, TILT = -0.42;
+
+    var BANDS = [
+      { at: 1.16, w: 0.16, k: 1.00 },
+      { at: 1.55, w: 0.18, k: 0.80 },
+      { at: 1.95, w: 0.20, k: 0.58 },
+      { at: 2.35, w: 0.22, k: 0.36 }
+    ];
+
+    function layout() {
+      var rect = el.getBoundingClientRect();
+      W = Math.max(300, Math.round(rect.width));
+      H = Math.max(220, Math.round(rect.height));
+      el.width = Math.round(W * DPR);
+      el.height = Math.round(H * DPR);
+      ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+
+      // resolution is the binding constraint: derive the cell height from a
+      // target row count, never from a fixed font size
+      cellH = Math.max(7, Math.min(13, Math.round(H / 44)));
+      FONT = cellH;
+
+      ctx.font = FONT + 'px "Geist Mono", ui-monospace, monospace';
+      cellW = ctx.measureText('M').width;
+
+      cols = Math.max(60, Math.floor(W / cellW));
+      rows = Math.floor(H / cellH);
+
+      CT = Math.cos(TILT); ST = Math.sin(TILT);
+      RMAX = Math.min(W * 0.50, H * 0.84);
+      CORE_R = RMAX * 0.40;
+
+      if (window.__ASCII_DEBUG) {
+        var sigmaMin = BANDS[0].w * CORE_R;
+        console.log('[ascii] cols', cols, 'rows', rows, 'pitch', cellH,
+          'RMAX', RMAX.toFixed(0), 'sigma_min', sigmaMin.toFixed(1),
+          'sigma/pitch', (sigmaMin / cellH).toFixed(2));
+      }
+    }
+
+    function density(px, py) {
+      var ux = px * CT + py * ST;
+      var uy = (-px * ST + py * CT) / SQUASH;
+      var r = Math.hypot(ux, uy);
+      var beta = Math.atan2(uy, ux);
+
+      var e = 1 + 0.022 * Math.sin(3 * beta + 1.2)
+                + 0.014 * Math.sin(7 * beta + 2.7);
+      if (r <= CORE_R * e) return 1;
+
+      var d = 0;
+      for (var i = 0; i < BANDS.length; i++) {
+        var at = BANDS[i].at * CORE_R, w = BANDS[i].w * CORE_R;
+        var z = (r - at) / w;
+        d += BANDS[i].k * Math.exp(-z * z);
+      }
+
+      var streak = Math.sin(beta * 3 + 0.7) * Math.sin(beta * 7 + 1.9);
+      d *= 0.74 + 0.26 * streak;
+
+      if (r > RMAX) d *= Math.max(0, 1 - (r - RMAX) / (RMAX * 0.45));
+
+      return Math.min(1, d * 1.35);
+    }
+
+    function draw() {
+      ctx.fillStyle = PAPER;
+      ctx.fillRect(0, 0, W, H);
+      ctx.font = FONT + 'px "Geist Mono", ui-monospace, monospace';
+      ctx.textBaseline = 'top';
+
+      var cx = W / 2, cy = H / 2;
+      var style = '';
+
+      for (var ry = 0; ry < rows; ry++) {
+        for (var rx = 0; rx < cols; rx++) {
+          // sample in pixel space — cell space is not square and every
+          // circle in it becomes an ellipse
+          var px = (rx + 0.5) * cellW - cx;
+          var py = (ry + 0.5) * cellH - cy;
+          var d = density(px, py);
+          if (d < 0.08) continue;
+
+          var idx = Math.round(d * (RAMP.length - 1));
+          if (idx <= 0) continue;
+
+          var hot = d > 0.93 && d < 0.999 && ((rx * 7 + ry * 13) % 23 === 0);
+          var want = hot ? RED : INK;
+          if (want !== style) { ctx.fillStyle = want; style = want; }
+
+          ctx.fillText(RAMP[idx], rx * cellW, ry * cellH);
+        }
+      }
+    }
+
+    function boot() { layout(); draw(); }
+
+    // Geist Mono must be loaded BEFORE measuring, or cellW comes from the
+    // fallback font and every cell shifts
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(boot);
+    } else {
+      boot();
+    }
+
+    var timer = null;
+    window.addEventListener('resize', function () {
+      clearTimeout(timer);
+      timer = setTimeout(boot, 150);
+    });
+  });
+})();
+</script>
