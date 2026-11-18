@@ -1,6 +1,9 @@
 {{- define "main" }}
 
 <article class="post-single">
+  {{- if not .Title }}
+  <h1 class="sr-only">{{ humanize .File.BaseFileName }}</h1>
+  {{- end }}
   <header class="post-header{{ if not .Title }} post-header--untitled{{ end }}">
     {{ partial "breadcrumbs.html" . }}
     {{- if .Title }}
