@@ -1,12 +1,12 @@
 {{/*
 Optional project front matter (neither field is required):
 
-  ascii_scene: "rings"  # rings | sphere | grid; defaults to "grid"
+  ascii_scene: "rings"  # fallback motif only: rings | sphere | grid
   wide: true            # span both home-page grid columns; defaults to false
 
-Existing title, summary, and weight values are used when present. Missing titles
-fall back to the filename; missing summaries fall back to Hugo's first-content
-summary. Unknown ascii_scene values safely fall back to "grid".
+The project's existing cover.image is rendered through the shared ASCII ramp.
+ascii_scene is used only when a project has no cover, or the image cannot be
+sampled. Existing title, summary, and weight values are used when present.
 */}}
 {{- $page := .page -}}
 {{- $title := default $page.File.BaseFileName $page.Title -}}
@@ -14,15 +14,28 @@ summary. Unknown ascii_scene values safely fall back to "grid".
 {{- $scene := $page.Params.ascii_scene | default "grid" -}}
 {{- if not (in (slice "rings" "sphere" "grid") $scene) -}}{{- $scene = "grid" -}}{{- end -}}
 {{- $wide := $page.Params.wide | default false -}}
+{{- $cover := $page.Params.cover.image | default "" -}}
+{{- if $cover -}}
+  {{- $cover = replaceRE `^https://github\.com/([^/]+)/([^/]+)/blob/(.+)$` "https://raw.githubusercontent.com/$1/$2/$3" $cover -}}
+  {{- $cover = replaceRE `\?raw=true$` "" $cover -}}
+{{- end -}}
+{{- $coverURL := "" -}}
+{{- if $cover -}}
+  {{- if hasPrefix $cover "http" -}}
+    {{- $coverURL = $cover -}}
+  {{- else -}}
+    {{- $coverURL = printf "/%s" (strings.TrimPrefix "/" $cover) | relURL -}}
+  {{- end -}}
+{{- end -}}
 <article class="project-card{{ if $wide }} project-card--wide{{ end }}">
   <a class="project-card__link" href="{{ $page.RelPermalink }}" aria-label="View project: {{ $title }}">
     <div class="project-card__visual" aria-hidden="true">
-      <canvas class="ascii-canvas project-card__canvas" data-ascii-scene="{{ $scene }}" aria-hidden="true"></canvas>
+      <canvas class="ascii-canvas project-card__canvas" data-ascii-image="{{ $coverURL }}" data-ascii-scene="{{ $scene }}" aria-hidden="true"></canvas>
     </div>
     <div class="project-card__body">
       <div class="project-card__meta micro-label">
         <span>Project / {{ printf "%02d" (add .index 1) }}</span>
-        <span>{{ $scene | title }}</span>
+        <span>{{ if $cover }}Cover / ASCII{{ else }}{{ $scene | title }}{{ end }}</span>
       </div>
       <h3>{{ $title }}</h3>
       {{- with $summary }}<p>{{ . }}</p>{{ end }}

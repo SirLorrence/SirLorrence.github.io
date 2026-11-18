@@ -10,9 +10,10 @@
     </a>
 
     <div class="home-nav__sections">
-      <a href="{{ if .IsHome }}#work{{ else }}{{ $homeURL }}#work{{ end }}"><span>01</span> Work</a>
+      <a href="{{ if .IsHome }}#work{{ else }}{{ $homeURL }}#work{{ end }}"><span>01</span> Projects</a>
       <a href="{{ if .IsHome }}#experience{{ else }}{{ $homeURL }}#experience{{ end }}"><span>02</span> Experience</a>
-      <a href="{{ if .IsHome }}#contact{{ else }}{{ $homeURL }}#contact{{ end }}"><span>03</span> Contact</a>
+      <a href="{{ if .IsHome }}#about{{ else }}{{ $homeURL }}#about{{ end }}"><span>03</span> About</a>
+      <a href="{{ if .IsHome }}#contact{{ else }}{{ $homeURL }}#contact{{ end }}"><span>04</span> Contact</a>
     </div>
 
     <div class="home-nav__pages">
